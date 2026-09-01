@@ -4,7 +4,7 @@ const child_process = require('child_process');
 
 const PROJECT_ID = 'antigravity2-zh-hant-tw';
 const PROJECT_NAME = 'Antigravity 2.0 繁體中文套件';
-const ENGINE_VERSION = '1.0.2';
+const ENGINE_VERSION = '1.0.3';
 const SIGNATURE = 'ZH-HANT-TW';
 
 const SIGNATURE_START = '/* --- ANTIGRAVITY ZH-HANT-TW LOCALIZATION START --- */';
@@ -197,6 +197,28 @@ function generateJs() {
             for (const [key, translated] of longEntries) {
                 if (key.length > 20 && valNorm.includes(key)) {
                     newVal = newVal.split(key).join(translated);
+                }
+            }
+        }
+        if (newVal === originalVal) {
+            const deleteProjectMatch = valNorm.match(/^Permanently delete (.+?) including (\\d+) active conversations? and (\\d+) archived conversations?\\.$/);
+            if (deleteProjectMatch) {
+                newVal = '永久刪除 ' + deleteProjectMatch[1] + '，包括 ' + deleteProjectMatch[2] + ' 個進行中對話以及 ' + deleteProjectMatch[3] + ' 個已封存對話。';
+            } else {
+                const deleteProjectPrefixMatch = valNorm.match(/^Permanently delete (.+)$/);
+                const activeConversationsMatch = valNorm.match(/^(\\d+) active conversations?$/);
+                const archivedConversationsMatch = valNorm.match(/^(\\d+) archived conversations?$/);
+
+                if (deleteProjectPrefixMatch) {
+                    newVal = '永久刪除 ' + deleteProjectPrefixMatch[1];
+                } else if (activeConversationsMatch) {
+                    newVal = activeConversationsMatch[1] + ' 個進行中對話';
+                } else if (archivedConversationsMatch) {
+                    newVal = archivedConversationsMatch[1] + ' 個已封存對話';
+                } else if (valNorm === 'including') {
+                    newVal = '，包括';
+                } else if (valNorm === 'and') {
+                    newVal = '以及';
                 }
             }
         }
