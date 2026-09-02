@@ -4,7 +4,7 @@ const child_process = require('child_process');
 
 const PROJECT_ID = 'antigravity2-zh-hant-tw';
 const PROJECT_NAME = 'Antigravity 2.0 繁體中文套件';
-const ENGINE_VERSION = '1.0.3';
+const ENGINE_VERSION = '1.0.4';
 const SIGNATURE = 'ZH-HANT-TW';
 
 const SIGNATURE_START = '/* --- ANTIGRAVITY ZH-HANT-TW LOCALIZATION START --- */';

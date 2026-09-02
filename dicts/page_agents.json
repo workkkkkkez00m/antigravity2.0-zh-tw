@@ -24,5 +24,15 @@
     "No subagents": "尚無子 Agent",
     "No active skills": "尚無使用中的技能",
     "Agent Auto-Fix Lints": "Agent 自動修復 Lint 錯誤",
-    "When enabled, agent is given awareness of lint errors created by its edits and may fix them without explicit user prompting.": "啟用後，Agent 將能夠感知其編輯所產生的 Lint 錯誤，並可在未經使用者明確提示的情況下嘗試修復。"
+    "When enabled, agent is given awareness of lint errors created by its edits and may fix them without explicit user prompting.": "啟用後，Agent 將能夠感知其編輯所產生的 Lint 錯誤，並可在未經使用者明確提示的情況下嘗試修復。",
+    "agy-customizations": "AGY 自訂系統",
+    "Comprehensive guide and reference for the Antigravity Customization System. Use to explain how customizations work, their loading priority, discovery mechanisms, and to guide the creation of skills, rules, plugins, hooks, and MCP servers.": "Antigravity 自訂系統的完整指南與參考資料。用於說明自訂項目的運作方式、載入優先順序、探索機制，並引導建立技能、規則、外掛程式、Hook 與 MCP 伺服器。",
+    "antigravity-guide": "Antigravity 指南",
+    "Provides a comprehensive guide, quick reference, and sitemap for Google Antigravity (AGY), including the Antigravity CLI (agy), Antigravity 2.0, Antigravity IDE, Python SDK, slash commands, keybindings, and customizations (skills, rules, MCP, sidecars). Activate this skill when the user asks questions about how to use, configure, or customize Antigravity, AGY, the agy CLI, the Antigravity IDE, or Antigravity 2.0.": "提供 Google Antigravity (AGY) 的完整指南、快速參考與網站地圖，涵蓋 Antigravity CLI (agy)、Antigravity 2.0、Antigravity IDE、Python SDK、斜線指令、快捷鍵，以及技能、規則、MCP、sidecar 等自訂功能。當使用者詢問如何使用、設定或自訂 Antigravity、AGY、agy CLI、Antigravity IDE 或 Antigravity 2.0 時，請啟用此技能。",
+    "generative_ui": "生成式 UI",
+    "How to render rich interactive HTML widgets inline in the chat or as standalone artifacts. Use this skill when you want to show the user diagrams, data visualizations, interactive controls, educational walkthroughs, or any rich visual content beyond plain text and markdown.": "說明如何在聊天中或獨立 Artifact 內呈現豐富的互動式 HTML 小工具。當你想向使用者展示圖表、資料視覺化、互動控制項、教學流程，或任何超出純文字與 Markdown 的豐富視覺內容時，請使用此技能。",
+    "migrate-workflows": "遷移工作流程",
+    "Automatically migrate legacy workflows (.agents/workflows/ or ~/.gemini/config/workflows/) to skills (.agents/skills/ or ~/.gemini/config/skills/). Scans for existing workflows, creates target SKILL.md files, and archives old workflow files.": "自動將舊版工作流程（.agents/workflows/ 或 ~/.gemini/config/workflows/）遷移為技能（.agents/skills/ 或 ~/.gemini/config/skills/）。會掃描現有工作流程、建立目標 SKILL.md 檔案，並封存舊的工作流程檔案。",
+    "permissioned-github": "GitHub 權限操作",
+    "Guidelines for interacting with GitHub and request permissions from the user when commands fail due to restrictions in the agent environment.": "與 GitHub 互動，以及當指令因 Agent 環境限制而失敗時向使用者請求權限的指引。"
 }

@@ -1,6 +1,6 @@
 # Antigravity 2.0 繁體中文套件
 
-將 Antigravity 2.0 的介面翻譯為繁體中文。請安裝最新版本 v1.0.3，以符合 Antigravity 2.0 官方最新介面。支援 Windows 與 macOS，提供一鍵安裝與完整還原。
+將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。請安裝最新版本 v1.0.4，以符合 Antigravity 2.0 官方最新介面。支援 Windows 與 macOS，提供一鍵安裝與完整還原。
 
 Antigravity 2.0 Traditional Chinese Localization Toolkit is an open-source project that translates the Antigravity 2.0 interface into Traditional Chinese. It works by unpacking and repacking the local Electron ASAR file, without modifying official core binaries or redistributing any official Antigravity files. The toolkit supports both Windows and macOS, provides one-click installation and full restoration, automatically creates backups, runs entirely on the user’s local machine, and carefully avoids translating code editors, terminals, input fields, debug consoles, and other areas where localization could interfere with development workflows.
 
@@ -10,7 +10,7 @@ Antigravity 2.0 Traditional Chinese Localization Toolkit is an open-source proje
 
 **Antigravity 2.0 繁體中文套件**是一套開源的介面本地化工具，透過 ASAR 解包與重新打包機制，將 Antigravity 2.0 的英文介面翻譯為繁體中文。
 
-為確保翻譯內容與 Antigravity 2.0 官方最新介面一致，建議安裝本套件最新版本 v1.0.3。
+為確保翻譯內容與 Antigravity 2.0 官方最新介面一致，建議安裝本套件最新版本 v1.0.4。
 
 - 不修改官方核心二進位檔案
 - 不散布官方 `app.asar` 或任何官方檔案
@@ -95,7 +95,7 @@ Antigravity 官方更新時，會重新覆蓋 `app.asar` 檔案，導致先前�
 | 平台 | 安裝 | 還原 | UI 驗證 | 備註 |
 |------|------|------|---------|------|
 | macOS | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 | 實機驗證完成 |
-| Windows | ✅ 已通過 | ✅ 已通過 | ⚠️ 未驗證 | v1.0.3 尚未於 Windows 系統實機驗證 |
+| Windows | ✅ 已通過 | ✅ 已通過 | ⚠️ 未驗證 | v1.0.4 尚未於 Windows 系統實機驗證 |
 
 > 翻譯範圍持續補齊中。若在使用過程中發現未翻譯的文字，歡迎回報。
 
