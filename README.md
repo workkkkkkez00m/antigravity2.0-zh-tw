@@ -1,6 +1,6 @@
 # Antigravity 2.0 繁體中文套件
 
-將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。請安裝最新版本 v1.0.4，以符合 Antigravity 2.0 官方最新介面。支援 Windows 與 macOS，提供一鍵安裝與完整還原。
+將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。請安裝最新版本 v1.0.5，以符合 Antigravity 2.0 官方最新介面。支援 Windows 與 macOS，完成 Node.js 與 `npm install` 後可雙擊腳本安裝與還原。
 
 Antigravity 2.0 Traditional Chinese Localization Toolkit is an open-source project that translates the Antigravity 2.0 interface into Traditional Chinese. It works by unpacking and repacking the local Electron ASAR file, without modifying official core binaries or redistributing any official Antigravity files. The toolkit supports both Windows and macOS, provides one-click installation and full restoration, automatically creates backups, runs entirely on the user’s local machine, and carefully avoids translating code editors, terminals, input fields, debug consoles, and other areas where localization could interfere with development workflows.
 
@@ -10,11 +10,11 @@ Antigravity 2.0 Traditional Chinese Localization Toolkit is an open-source proje
 
 **Antigravity 2.0 繁體中文套件**是一套開源的介面本地化工具，透過 ASAR 解包與重新打包機制，將 Antigravity 2.0 的英文介面翻譯為繁體中文。
 
-為確保翻譯內容與 Antigravity 2.0 官方最新介面一致，建議安裝本套件最新版本 v1.0.4。
+為確保翻譯內容與 Antigravity 2.0 官方最新介面一致，建議安裝本套件最新版本 v1.0.5。
 
 - 不修改官方核心二進位檔案
 - 不散布官方 `app.asar` 或任何官方檔案
-- 支援一鍵安裝與完整還原
+- 完成 Node.js 與 `npm install` 後，可雙擊腳本安裝與完整還原
 - 所有操作在使用者本機端執行
 
 ---
@@ -52,20 +52,17 @@ npm install
 ### 方式二：Git Clone
 
 ```bash
-git clone https://github.com/<owner>/antigravity2.0-zh-tw.git
+git clone https://github.com/workkkkkkez00m/antigravity2.0-zh-tw.git
 cd antigravity2-zh-hant-tw
 npm install
 ```
-
-> 請將 `<owner>` 替換為實際的 GitHub 帳號名稱。
-
 ---
 
 ## 功能特色
 
 - 🌐 **繁體中文介面**：涵蓋主介面、設定頁、Agent 管理、MCP／知識庫頁面等多個區域
 - 🖥️ **跨平台支援**：同時支援 Windows 與 macOS
-- 🔧 **一鍵安裝**：雙擊腳本即可完成安裝，無需手動操作
+- 🔧 **一鍵安裝**：完成 Node.js 與 `npm install` 後，雙擊腳本即可執行安裝
 - 🔄 **完整還原**：隨時可還原為官方英文原版
 - 🛡️ **安全備份**：首次安裝時自動備份官方 `app.asar`
 - 📦 **離線運作**：使用本地 `@electron/asar`，不依賴 `npx` 動態下載
@@ -95,7 +92,7 @@ Antigravity 官方更新時，會重新覆蓋 `app.asar` 檔案，導致先前�
 | 平台 | 安裝 | 還原 | UI 驗證 | 備註 |
 |------|------|------|---------|------|
 | macOS | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 | 實機驗證完成 |
-| Windows | ✅ 已通過 | ✅ 已通過 | ⚠️ 未驗證 | v1.0.4 尚未於 Windows 系統實機驗證 |
+| Windows | ✅ 已通過 | ✅ 已通過 | ⚠️ 部分驗證 | v1.0.5 已於 Windows 10 測試完成，Windows 11 待測試 |
 
 > 翻譯範圍持續補齊中。若在使用過程中發現未翻譯的文字，歡迎回報。
 
@@ -146,7 +143,7 @@ npm install
 
 ### 前置確認
 
-開啟**命令提示字元**或 **PowerShell**，確認 Node.js 與 npm 已可使用：
+建議開啟**命令提示字元 cmd**，確認 Node.js 與 npm 已可使用：
 
 ```cmd
 node -v
@@ -157,6 +154,12 @@ npm -v
 
 ```cmd
 npm install
+```
+
+若使用 PowerShell 時被 ExecutionPolicy 擋住，可改用命令提示字元 cmd，或在 PowerShell 中執行：
+
+```cmd
+npm.cmd install
 ```
 
 ### 安裝繁體中文
