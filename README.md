@@ -2,7 +2,7 @@
 
 將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。請安裝最新版本 v1.0.5，以符合 Antigravity 2.0 官方最新介面。支援 Windows 與 macOS，完成 Node.js 與 `npm install` 後可雙擊腳本安裝與還原。
 
-Antigravity 2.0 Traditional Chinese Localization Toolkit is an open-source project that translates the Antigravity 2.0 interface into Traditional Chinese. It works by unpacking and repacking the local Electron ASAR file, without modifying official core binaries or redistributing any official Antigravity files. The toolkit supports both Windows and macOS, provides one-click installation and full restoration, automatically creates backups, runs entirely on the user’s local machine, and carefully avoids translating code editors, terminals, input fields, debug consoles, and other areas where localization could interfere with development workflows.
+Antigravity 2.0 Traditional Chinese Localization Toolkit is an open-source project that translates the Antigravity 2.0 interface into Traditional Chinese. It works by unpacking and repacking the local Electron ASAR file, without modifying official core binaries or redistributing any official Antigravity files. The toolkit supports both Windows and macOS, provides quick script-based installation and full restoration after dependencies are installed, automatically creates backups, runs entirely on the user’s local machine, and carefully avoids translating code editors, terminals, input fields, debug consoles, and other areas where localization could interfere with development workflows.
 
 ---
 
@@ -62,7 +62,7 @@ npm install
 
 - 🌐 **繁體中文介面**：涵蓋主介面、設定頁、Agent 管理、MCP／知識庫頁面等多個區域
 - 🖥️ **跨平台支援**：同時支援 Windows 與 macOS
-- 🔧 **一鍵安裝**：完成 Node.js 與 `npm install` 後，雙擊腳本即可執行安裝
+- 🔧 **快速安裝**：完成 Node.js 與 `npm install` 後，雙擊腳本即可執行安裝
 - 🔄 **完整還原**：隨時可還原為官方英文原版
 - 🛡️ **安全備份**：首次安裝時自動備份官方 `app.asar`
 - 📦 **離線運作**：使用本地 `@electron/asar`，不依賴 `npx` 動態下載
