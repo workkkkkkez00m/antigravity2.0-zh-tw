@@ -6,7 +6,7 @@
 >
 > 可依偏好的安裝方式自行選擇下載。
 
-將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。目前提供傳統腳本安裝流程與 v2 安裝器流程；前者適合習慣自行解壓縮並執行 `npm install` 的使用者，後者適合偏好圖形化安裝檔的使用者。支援 Windows 與 macOS。
+將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。建議安裝本套件最新版，以符合 Antigravity 2.0 官方最新 v2.14.0 介面。支援 Windows 與 macOS，完成 Node.js 與 `npm install` 後可按兩下腳本安裝與還原。
 
 Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available project that translates the Antigravity 2.0 interface into Traditional Chinese. It works by unpacking and repacking the local Electron ASAR file, without modifying official core binaries or redistributing any official Antigravity files. The toolkit supports both Windows and macOS, provides quick script-based installation and full restoration after dependencies are installed, automatically creates backups, runs entirely on the user’s local machine, and carefully avoids translating code editors, terminals, input fields, debug consoles, and other areas where localization could interfere with development workflows.
 
@@ -41,9 +41,9 @@ Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available p
 
 ### 方式一：GitHub Releases（推薦）
 
-前往本專案的 [GitHub Releases](../../releases) 頁面，在 Assets 區下載 `antigravity2-zh-hant-v1.0.6.zip`。
+前往本專案的 [GitHub Releases](../../releases) 頁面，在 Assets 區下載 `antigravity2-zh-hant-v1.0.7.zip`。
 
-1. 下載 `antigravity2-zh-hant-v1.0.6.zip`
+1. 下載 `antigravity2-zh-hant-v1.0.7.zip`
 2. 解壓縮到任意目錄
 3. 開啟 Windows 的 **命令提示字元（cmd）**，或 macOS 的 **終端機（Terminal）**
 4. 使用 `cd` 切換到剛才解壓縮的套件資料夾
@@ -56,14 +56,14 @@ npm install
 Windows 範例：
 
 ```bash
-cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.6"
+cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.7"
 npm install
 ```
 
 macOS 範例：
 
 ```bash
-cd ~/Downloads/antigravity2-zh-hant-v1.0.6
+cd ~/Downloads/antigravity2-zh-hant-v1.0.7
 npm install
 ```
 
@@ -120,7 +120,7 @@ Antigravity 官方更新時，會重新覆蓋 `app.asar` 檔案，導致先前�
 | 平台 | 安裝 | 還原 | UI 驗證 | 備註 |
 |------|------|------|---------|------|
 | macOS | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 | 實機驗證完成 |
-| Windows | ✅ 已通過 | ✅ 已通過 | ⚠️ 部分驗證 | v1.0.6 已於 Windows 10 測試完成，Windows 11 待測試 |
+| Windows | ✅ 已通過 | ✅ 已通過 | ⚠️ 部分驗證 | v1.0.7 已於 Windows 10 測試完成 |
 
 > 翻譯範圍持續補齊中。若在使用過程中發現未翻譯的文字，歡迎回報。
 
@@ -166,10 +166,10 @@ npm install
 
 ```bash
 # Windows 範例
-cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.6"
+cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.7"
 
 # macOS 範例
-cd ~/Downloads/antigravity2-zh-hant-v1.0.6
+cd ~/Downloads/antigravity2-zh-hant-v1.0.7
 ```
 
 3. 確認 Node.js 與 npm：
@@ -207,7 +207,7 @@ npm -v
 若上述指令能正確輸出版本號，請先使用 `cd` 切換到解壓縮後的本套件資料夾，再執行：
 
 ```cmd
-cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.6"
+cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.7"
 npm install
 ```
 
@@ -271,7 +271,7 @@ npm -v
 若上述指令能正確輸出版本號，請先使用 `cd` 切換到解壓縮後的本套件資料夾，再執行：
 
 ```bash
-cd ~/Downloads/antigravity2-zh-hant-v1.0.6
+cd ~/Downloads/antigravity2-zh-hant-v1.0.7
 npm install
 ```
 
