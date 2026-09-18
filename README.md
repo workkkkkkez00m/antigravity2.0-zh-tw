@@ -1,9 +1,12 @@
 # Antigravity 2.0 繁體中文套件
 
-> **v2.0.0 Beta：** [查看新版快速安裝說明](README-v2.0.0-beta.md)
-> 新版加入 Installer 快速安裝流程；若電腦已具備 Node.js／npm，安裝器可自動準備必要套件並完成繁中套用，免手動執行 `npm install`。
+> **安裝方式選擇：**
+> - v1.0.7：傳統 zip / `npm install` / 腳本安裝流程。
+> - v2.0.0：Windows / macOS 安裝器流程，仍需先安裝 Node.js LTS，但不需手動執行 `npm install`。請參考 [v2.0.0 快速安裝說明](README-v2.md)。
+>
+> 可依偏好的安裝方式自行選擇下載。
 
-將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。建議可先安裝穩定版 v1.0.6，以符合 Antigravity 2.0 官方最新 v2.12.2 介面。支援 Windows 與 macOS，完成 Node.js 與 `npm install` 後可按兩下腳本安裝與還原。
+將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。建議安裝本套件最新版，以符合 Antigravity 2.0 官方最新 v2.14.0 介面。支援 Windows 與 macOS，完成 Node.js 與 `npm install` 後可按兩下腳本安裝與還原。
 
 Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available project that translates the Antigravity 2.0 interface into Traditional Chinese. It works by unpacking and repacking the local Electron ASAR file, without modifying official core binaries or redistributing any official Antigravity files. The toolkit supports both Windows and macOS, provides quick script-based installation and full restoration after dependencies are installed, automatically creates backups, runs entirely on the user’s local machine, and carefully avoids translating code editors, terminals, input fields, debug consoles, and other areas where localization could interfere with development workflows.
 
@@ -11,9 +14,9 @@ Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available p
 
 ## 簡介
 
-**Antigravity 2.0 繁體中文套件**是一套原始碼公開的介面本地化工具，透過 ASAR 解包與重新打包機制，將 Antigravity 2.0 的英文介面翻譯為繁體中文。
+**Antigravity 2.0 繁體中文套件**是一套公開且免費的介面本地化工具，透過 ASAR 解包與重新打包機制，將 Antigravity 2.0 的英文介面翻譯為繁體中文。
 
-為確保翻譯內容與 Antigravity 2.0 官方最新 v2.12.2 介面一致，建議可先安裝穩定版 v1.0.6。
+為確保翻譯內容與 Antigravity 2.0 官方最新 v2.14.0 介面一致，建議可先安裝本套件最新版。
 
 - 不修改官方核心二進位檔案
 - 不散布官方 `app.asar` 或任何官方檔案
@@ -38,9 +41,9 @@ Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available p
 
 ### 方式一：GitHub Releases（推薦）
 
-前往本專案的 [GitHub Releases](../../releases) 頁面，在 Assets 區下載 `antigravity2-zh-hant-v1.0.6.zip`。
+前往本專案的 [GitHub Releases](../../releases) 頁面，在 Assets 區下載 `antigravity2-zh-hant-v1.0.7.zip`。
 
-1. 下載 `antigravity2-zh-hant-v1.0.6.zip`
+1. 下載 `antigravity2-zh-hant-v1.0.7.zip`
 2. 解壓縮到任意目錄
 3. 開啟 Windows 的 **命令提示字元（cmd）**，或 macOS 的 **終端機（Terminal）**
 4. 使用 `cd` 切換到剛才解壓縮的套件資料夾
@@ -53,14 +56,14 @@ npm install
 Windows 範例：
 
 ```bash
-cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.6"
+cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.7"
 npm install
 ```
 
 macOS 範例：
 
 ```bash
-cd ~/Downloads/antigravity2-zh-hant-v1.0.6
+cd ~/Downloads/antigravity2-zh-hant-v1.0.7
 npm install
 ```
 
@@ -117,7 +120,7 @@ Antigravity 官方更新時，會重新覆蓋 `app.asar` 檔案，導致先前�
 | 平台 | 安裝 | 還原 | UI 驗證 | 備註 |
 |------|------|------|---------|------|
 | macOS | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 | 實機驗證完成 |
-| Windows | ✅ 已通過 | ✅ 已通過 | ⚠️ 部分驗證 | v1.0.6 已於 Windows 10 測試完成，Windows 11 待測試 |
+| Windows | ✅ 已通過 | ✅ 已通過 | ⚠️ 部分驗證 | v1.0.7 已於 Windows 10 測試完成 |
 
 > 翻譯範圍持續補齊中。若在使用過程中發現未翻譯的文字，歡迎回報。
 
@@ -163,10 +166,10 @@ npm install
 
 ```bash
 # Windows 範例
-cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.6"
+cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.7"
 
 # macOS 範例
-cd ~/Downloads/antigravity2-zh-hant-v1.0.6
+cd ~/Downloads/antigravity2-zh-hant-v1.0.7
 ```
 
 3. 確認 Node.js 與 npm：
@@ -204,7 +207,7 @@ npm -v
 若上述指令能正確輸出版本號，請先使用 `cd` 切換到解壓縮後的本套件資料夾，再執行：
 
 ```cmd
-cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.6"
+cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.7"
 npm install
 ```
 
@@ -268,7 +271,7 @@ npm -v
 若上述指令能正確輸出版本號，請先使用 `cd` 切換到解壓縮後的本套件資料夾，再執行：
 
 ```bash
-cd ~/Downloads/antigravity2-zh-hant-v1.0.6
+cd ~/Downloads/antigravity2-zh-hant-v1.0.7
 npm install
 ```
 
@@ -449,11 +452,11 @@ Windows 執行 `restore-win.bat`、macOS 執行 `restore-macos.command`，或使
 
 ## 授權
 
-自 v2.0.0-beta 起，本專案採用 [Apache License 2.0 with Commons Clause](LICENSE) 授權，屬於 source-available／原始碼公開授權，並非 OSI 定義的 open source 授權。
+自 v2.0.0 / v1.0.7 版本起，本專案採用 [Apache License 2.0 with Commons Clause](LICENSE) 授權，屬於 source-available／原始碼公開授權，並非 OSI 定義的 open source 授權。
 
 你可以一般使用、研究、修改與分享本專案原始碼；但不得販售本軟體本身，或將本軟體主要功能包裝成付費商品或服務。
 
-v1.0.x 既有發布版本仍依其發布時的 Apache License 2.0 授權，不因 v2.0.0-beta 起的授權變更而追溯改變。
+更早的既有發布版本仍依其發布時的 Apache License 2.0 授權，不因 v2.0.0 / v1.0.7 版本起的授權變更而追溯改變。
 
 ---
 
@@ -463,4 +466,4 @@ v1.0.x 既有發布版本仍依其發布時的 Apache License 2.0 授權，不�
 - 本專案**不包含、不散布** Antigravity 官方 `app.asar` 或任何官方二進位檔案。
 - 使用者應自行承擔修改本機應用程式資源的風險。
 - 所有注入操作均在使用者的電腦執行，並提供完整還原機制。
-- 本專案自 v2.0.0-beta 起依據 Apache License 2.0 with Commons Clause 以「現狀」（AS IS）提供，不附帶任何明示或暗示的保證；v1.0.x 既有發布版本仍依其發布時的 Apache License 2.0 授權。
+- 本專案自 v2.0.0 / v1.0.7 版本起依據 Apache License 2.0 with Commons Clause 以「現狀」（AS IS）提供，不附帶任何明示或暗示的保證；更早的既有發布版本仍依其發布時的 Apache License 2.0 授權。

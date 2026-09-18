@@ -4,7 +4,7 @@ const child_process = require('child_process');
 
 const PROJECT_ID = 'antigravity2-zh-hant-tw';
 const PROJECT_NAME = 'Antigravity 2.0 繁體中文套件';
-const ENGINE_VERSION = '1.0.6';
+const ENGINE_VERSION = '1.0.7';
 const SIGNATURE = 'ZH-HANT-TW';
 
 const SIGNATURE_START = '/* --- ANTIGRAVITY ZH-HANT-TW LOCALIZATION START --- */';
@@ -382,7 +382,11 @@ function generateJs() {
 
     function translateNode(node) {
         try {
-            if (!node || done.has(node)) return;
+            if (!node) return;
+            if (done.has(node)) {
+                if (node.nodeType !== Node.TEXT_NODE || translateString(node.nodeValue) === node.nodeValue) return;
+                done.delete(node);
+            }
 
             if (node.nodeType === Node.ELEMENT_NODE) {
                 translateAttributes(node);
