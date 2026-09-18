@@ -1,23 +1,22 @@
-# Antigravity 2.0 繁體中文套件 — v2.0.0 Beta
+# Antigravity 2.0 繁體中文套件 — v2.0.0
 
-> 此版本目前為 Beta。
-> [返回 v1.0.6 穩定版說明](README.md)
+> [返回 v1.0.7 傳統安裝流程說明](README.md)
 
-## v2.0.0 Beta
+## v2.0.0
 
-v2.0.0 Beta 主要改善安裝流程，讓一般使用者可以透過 Windows / macOS 安裝檔快速套用繁體中文介面。
+v2.0.0 主要改善安裝流程，讓一般使用者可以透過 Windows / macOS 安裝檔快速套用繁體中文介面。
 
 請先留意兩件事：
 
 - 電腦仍需先安裝 Node.js LTS。
 - 若電腦已具備 Node.js / npm，即可使用安裝檔進行一鍵安裝，不需要手動執行 `npm install`。
 
-> ⚠️ v2.0.0 Beta 的一鍵安裝是「免手動 `npm install`」，不是「免安裝 Node.js」。
+> ⚠️ v2.0.0 的一鍵安裝是「免手動 `npm install`」，不是「免安裝 Node.js」。
 > 安裝器不會內建 Node.js，也不會自動替使用者安裝 Node.js。
 
-## v2.0.0 Beta 工具畫面
+## v2.0.0 工具畫面
 
-v2.0.0 Beta 新增 Windows / macOS 圖形化安裝與還原工具。使用者只要先安裝 Node.js LTS，即可透過安裝檔完成套用，不需要手動執行 `npm install`。
+v2.0.0 新增 Windows / macOS 圖形化安裝與還原工具。使用者只要先安裝 Node.js LTS，即可透過安裝檔完成套用，不需要手動執行 `npm install`。
 
 ### Windows
 
@@ -63,7 +62,7 @@ npm -v
 安裝：
 
 ```text
-Antigravity-ZH-Hant-TW-v2.0.0-beta-Windows-Install.exe
+Antigravity-ZH-Hant-TW-v2.0.0-Windows-Install.exe
 ```
 
 #### macOS
@@ -71,7 +70,7 @@ Antigravity-ZH-Hant-TW-v2.0.0-beta-Windows-Install.exe
 安裝：
 
 ```
-Antigravity-ZH-Hant-TW-v2.0.0-beta-macOS-Install.pkg
+Antigravity-ZH-Hant-TW-v2.0.0-macOS-Install.pkg
 ```
 
 安裝完成後，重新開啟 Antigravity，即可看到繁體中文介面。
@@ -85,20 +84,20 @@ Antigravity-ZH-Hant-TW-v2.0.0-beta-macOS-Install.pkg
 ### Windows
 
 ```text
-Antigravity-ZH-Hant-TW-v2.0.0-beta-Windows-Restore.exe
+Antigravity-ZH-Hant-TW-v2.0.0-Windows-Restore.exe
 ```
 
 ### macOS
 
 ```
-Antigravity-ZH-Hant-TW-v2.0.0-beta-macOS-Restore.pkg
+Antigravity-ZH-Hant-TW-v2.0.0-macOS-Restore.pkg
 ```
 
 還原會使用安裝時建立的備份，將 Antigravity 回復為官方原版。
 
 ## 安全性特色
 
-v2.0.0 Beta 保留原有安全性設計：
+v2.0.0 保留原有安全性設計：
 
 - 不內建 Node.js，使用者需自行從官方網站安裝。
 - 安裝檔只是將安裝流程自動化，所需套件仍會從官方來源下載，因此安裝時需要網路連線。
@@ -111,18 +110,12 @@ v2.0.0 的主要改變是讓安裝更簡單，不是放寬安全限制。
 
 ## 授權
 
-自 v2.0.0-beta 起，本專案採用 [Apache License 2.0 with Commons Clause](LICENSE) 授權，屬於 source-available／原始碼公開授權，並非 OSI 定義的 open source 授權。
+自 v2.0.0 / v1.0.7 版本起，本專案採用 [Apache License 2.0 with Commons Clause](LICENSE) 授權，屬於 source-available／原始碼公開授權，並非 OSI 定義的 open source 授權。
 
 你可以一般使用、研究、修改與分享本專案原始碼；但不得販售本軟體本身，或將本軟體主要功能包裝成付費商品或服務。
 
-## Beta 狀態
+## 發行狀態
 
-v2.0.0 Beta 仍處於實機驗證階段，目前已完成 Windows / macOS 安裝檔建置驗證。
+v2.0.0 已完成 Windows / macOS 安裝檔建置驗證，提供正式版安裝器流程。
 
-若希望使用目前穩定版，請使用：
-
-```
-v1.0.6
-```
-
-並依照 v1.0.6 穩定版 README 的既有方式操作。
+若偏好傳統 zip / `npm install` / 腳本安裝流程，請參考 v1.0.7 README 的既有方式操作。
