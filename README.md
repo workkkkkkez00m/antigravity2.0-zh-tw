@@ -1,12 +1,12 @@
 # Antigravity 2.0 繁體中文套件
 
 > **安裝方式選擇：**
-> - v1.0.7：傳統 zip / `npm install` / 腳本安裝流程。
-> - v2.0.0：Windows / macOS 安裝器流程，仍需先安裝 Node.js LTS，但不需手動執行 `npm install`。請參考 [v2.0.0 快速安裝說明](README-v2.md)。
+> - v1.0.8：傳統 zip / `npm install` / 腳本安裝流程。
+> - v2.0.1：Windows / macOS 安裝器流程，仍需先安裝 Node.js LTS，但不需手動執行 `npm install`。請參考 [v2.0.1 快速安裝說明](README-v2.md)。
 >
 > 可依偏好的安裝方式自行選擇下載。
 
-將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。建議安裝本套件最新版，以符合 Antigravity 2.0 官方最新 v2.14.0 介面。支援 Windows 與 macOS，完成 Node.js 與 `npm install` 後可按兩下腳本安裝與還原。
+將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。建議安裝本套件最新版，以符合 Antigravity 2.0 官方最新 v2.18.1 介面。支援 Windows 與 macOS，完成 Node.js 與 `npm install` 後可按兩下腳本安裝與還原。
 
 Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available project that translates the Antigravity 2.0 interface into Traditional Chinese. It works by unpacking and repacking the local Electron ASAR file, without modifying official core binaries or redistributing any official Antigravity files. The toolkit supports both Windows and macOS, provides quick script-based installation and full restoration after dependencies are installed, automatically creates backups, runs entirely on the user’s local machine, and carefully avoids translating code editors, terminals, input fields, debug consoles, and other areas where localization could interfere with development workflows.
 
@@ -14,9 +14,9 @@ Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available p
 
 ## 簡介
 
-**Antigravity 2.0 繁體中文套件**是一套公開且免費的介面本地化工具，透過 ASAR 解包與重新打包機制，將 Antigravity 2.0 的英文介面翻譯為繁體中文。
+**Antigravity 2.0 繁體中文套件**是一套公開且免費的介面本地化工具，透過 ASAR 展開與重新打包機制，將 Antigravity 2.0 的英文介面翻譯為繁體中文。
 
-為確保翻譯內容與 Antigravity 2.0 官方最新 v2.14.0 介面一致，建議可先安裝本套件最新版。
+為確保翻譯內容與 Antigravity 2.0 官方最新 v2.18.1 介面一致，建議可先安裝本套件最新版。
 
 - 不修改官方核心二進位檔案
 - 不散布官方 `app.asar` 或任何官方檔案
@@ -41,9 +41,9 @@ Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available p
 
 ### 方式一：GitHub Releases（推薦）
 
-前往本專案的 [GitHub Releases](../../releases) 頁面，在 Assets 區下載 `antigravity2-zh-hant-v1.0.7.zip`。
+前往本專案的 [GitHub Releases](../../releases) 頁面，在 Assets 區下載 `antigravity2-zh-hant-v1.0.8.zip`。
 
-1. 下載 `antigravity2-zh-hant-v1.0.7.zip`
+1. 下載 `antigravity2-zh-hant-v1.0.8.zip`
 2. 解壓縮到任意目錄
 3. 開啟 Windows 的 **命令提示字元（cmd）**，或 macOS 的 **終端機（Terminal）**
 4. 使用 `cd` 切換到剛才解壓縮的套件資料夾
@@ -56,14 +56,14 @@ npm install
 Windows 範例：
 
 ```bash
-cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.7"
+cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.8"
 npm install
 ```
 
 macOS 範例：
 
 ```bash
-cd ~/Downloads/antigravity2-zh-hant-v1.0.7
+cd ~/Downloads/antigravity2-zh-hant-v1.0.8
 npm install
 ```
 
@@ -120,7 +120,7 @@ Antigravity 官方更新時，會重新覆蓋 `app.asar` 檔案，導致先前�
 | 平台 | 安裝 | 還原 | UI 驗證 | 備註 |
 |------|------|------|---------|------|
 | macOS | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 | 實機驗證完成 |
-| Windows | ✅ 已通過 | ✅ 已通過 | ⚠️ 部分驗證 | v1.0.7 已於 Windows 10 測試完成 |
+| Windows | ✅ 已通過 | ✅ 已通過 | ⚠️ 部分驗證 | v1.0.8 已於 Windows 10 測試完成 |
 
 > 翻譯範圍持續補齊中。若在使用過程中發現未翻譯的文字，歡迎回報。
 
@@ -153,7 +153,7 @@ Antigravity 官方更新時，會重新覆蓋 `app.asar` 檔案，導致先前�
 npm install
 ```
 
-此步驟會安裝本地 `@electron/asar` 套件，用於 ASAR 解包與重新打包。本套件使用本地安裝的 `@electron/asar`，不依賴 `npx` 動態下載，確保離線環境也能正常運作。
+此步驟會安裝本地 `@electron/asar` 套件，用於 ASAR 展開與重新打包。本套件使用本地安裝的 `@electron/asar`，不依賴 `npx` 動態下載，確保離線環境也能正常運作。
 
 ---
 
@@ -166,10 +166,10 @@ npm install
 
 ```bash
 # Windows 範例
-cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.7"
+cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.8"
 
 # macOS 範例
-cd ~/Downloads/antigravity2-zh-hant-v1.0.7
+cd ~/Downloads/antigravity2-zh-hant-v1.0.8
 ```
 
 3. 確認 Node.js 與 npm：
@@ -207,7 +207,7 @@ npm -v
 若上述指令能正確輸出版本號，請先使用 `cd` 切換到解壓縮後的本套件資料夾，再執行：
 
 ```cmd
-cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.7"
+cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.8"
 npm install
 ```
 
@@ -271,7 +271,7 @@ npm -v
 若上述指令能正確輸出版本號，請先使用 `cd` 切換到解壓縮後的本套件資料夾，再執行：
 
 ```bash
-cd ~/Downloads/antigravity2-zh-hant-v1.0.7
+cd ~/Downloads/antigravity2-zh-hant-v1.0.8
 npm install
 ```
 
@@ -360,7 +360,7 @@ node localization_engine.js --restore
 | 啟動畫面文字 | 載入動畫文字 |
 | 鍵盤快捷鍵頁 | 快捷鍵描述與分類 |
 
-> 目前共 **813 筆翻譯詞彙**。
+> 目前共 **847 筆翻譯詞彙**。
 
 ### 不翻譯區域
 
@@ -381,13 +381,13 @@ node localization_engine.js --restore
 <details>
 <summary><strong>為什麼需要 npm install？</strong></summary>
 
-本套件使用 `@electron/asar` 進行 ASAR 解包與重新打包。`npm install` 會將此工具安裝到本地 `node_modules/` 目錄，使安裝腳本能夠正常運作。只需在首次使用時執行一次。
+本套件使用 `@electron/asar` 進行 ASAR 展開與重新打包。`npm install` 會將此工具安裝到本地 `node_modules/` 目錄，使安裝腳本能夠正常運作。只需在首次使用時執行一次。
 </details>
 
 <details>
 <summary><strong>沒有 Node.js 可以用嗎？</strong></summary>
 
-目前不行。本地化引擎以 Node.js 撰寫，需要 Node.js 執行 ASAR 解包、注入與重新打包。請前往 [nodejs.org](https://nodejs.org/) 安裝 LTS 版本。
+目前不行。本地化引擎以 Node.js 撰寫，需要 Node.js 執行 ASAR 展開、注入與重新打包。請前往 [nodejs.org](https://nodejs.org/) 安裝 LTS 版本。
 </details>
 
 <details>
@@ -423,7 +423,7 @@ Windows 執行 `restore-win.bat`、macOS 執行 `restore-macos.command`，或使
 <details>
 <summary><strong>是否會修改官方 app.asar？</strong></summary>
 
-是的，安裝過程會解包 `app.asar`、注入翻譯程式碼後重新打包。但首次安裝時會自動建立 `app.asar.bak` 備份，可隨時還原為官方原版。
+是的，安裝過程會展開 `app.asar`、注入翻譯程式碼後重新打包。但首次安裝時會自動建立 `app.asar.bak` 備份，可隨時還原為官方原版。
 </details>
 
 <details>

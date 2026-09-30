@@ -287,6 +287,8 @@
     "MCP Tools": "MCP 工具",
     "Configure external tools via Model Context Protocol.": "透過 Model Context Protocol 設定外部工具。",
     "Appearance": "外觀",
+    "Contrast": "對比度",
+    "Strong": "高對比",
     "Configure default behaviors, skills, and MCP servers.": "設定預設行為、技能預設和 MCP 伺服器。",
     "The breakdown below shows token usage from customizations like skills, rules, and MCP. If the budget is exceeded, large customizations will be truncated automatically.": "下方的明細顯示了源自技能預設、規則和 MCP 等個人化設定的 Token 使用量。如果超出預算額度，大型的個人化元件將會被自動截斷。",
     "There are no customizations enabled.": "目前未啟用任何自訂項目。",
@@ -423,12 +425,10 @@
     "Browse and enable plugins from the Build With Google catalog.": "瀏覽並啟用「以 Google 技術建構」目錄中的外掛程式。",
     "Also includes ": "在此專案中工作時，也會套用 ",
     " when working in this project.": "。",
-
     "Plan": "方案",
     "Weekly Limit": "每週限制",
     "Five Hour Limit": "五小時限制",
     "Within each group, models share a weekly limit and a 5-hour limit. Quota is consumed proportionally to the cost of the tokens. Thus, limits will last longer with shorter tasks or using more cost-effective models. The 5-hour limit smooths out aggregate demand to fairly distribute global capacity across all users, while your weekly limit is tied directly to your individual tier.": "在同一群組中，各模型共享每週限制與五小時限制。配額的消耗與 Token 費用成比例。因此，使用較短的任務或成本效益更高的模型，限制將持續更長時間。五小時限制可平滑整體需求，以公平地將全球算力分配給所有使用者；而每週限制則直接與您個人的訂閱方案綁定。",
-
     "Bug Report": "錯誤回報",
     "Feature Request": "功能請求",
     "Auth and Billing": "驗證與帳單",
@@ -463,5 +463,15 @@
     "Useful for typical development with an emphasis on security. It prioritizes safety over speed by requiring manual approval for all terminal commands and files outside the project directory.": "適合一般開發情境，並著重安全性。所有終端機指令，以及專案目錄以外的檔案操作，都需手動核准。",
     "Block all browser JavaScript execution.": "禁止執行所有瀏覽器 JavaScript。",
     "Prompt for approval before running browser scripts.": "執行瀏覽器指令碼前要求核准。",
-    "Allow full browser script execution without prompting.": "允許執行所有瀏覽器指令碼，且不需事先核准。"
+    "Allow full browser script execution without prompting.": "允許執行所有瀏覽器指令碼，且不需事先核准。",
+    "Type ": "輸入 ",
+    " and select ": "，然後選擇 ",
+    " to have the agent generate a plan.": "，讓 Agent 產生執行規劃。",
+    "Windows Subsystem for Linux": "適用於 Linux 的 Windows 子系統",
+    "Run the app against a Linux environment. Connecting relaunches the app into the selected WSL distro.": "在 Linux 環境中執行應用程式。連線後，應用程式會重新啟動並切換至所選的 WSL 發行版。",
+    "Connected": "已連線",
+    "Connect": "連線",
+    "Local Windows environment": "本機 Windows 環境",
+    "The app is currently connected to a WSL distro. Reopening locally relaunches it directly on Windows.": "應用程式目前已連線至 WSL 發行版。在本機重新開啟後，應用程式會重新啟動並直接在 Windows 上執行。",
+    "Reopen Locally": "在本機重新開啟"
 }
