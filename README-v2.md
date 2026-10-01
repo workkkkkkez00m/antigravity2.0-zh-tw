@@ -65,6 +65,8 @@ npm -v
 Antigravity-ZH-Hant-TW-v2.0.1-Windows-Install.exe
 ```
 
+> ⚠️ **Windows SmartScreen 提醒**：目前 Windows 安裝檔尚未加入 Authenticode 程式碼簽章，因此 Windows 可能顯示 SmartScreen 警告。請只從本專案的 [GitHub Releases](../../releases) 下載安裝檔，不要使用來路不明的轉載檔案。
+
 #### macOS
 
 安裝：
