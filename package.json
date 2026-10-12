@@ -1,8 +1,7 @@
 {
   "name": "antigravity2-zh-hant-tw",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": true,
-  "license": "SEE LICENSE IN LICENSE",
   "description": "Antigravity 2.0 繁體中文套件",
   "scripts": {
     "check": "node --check localization_engine.js",

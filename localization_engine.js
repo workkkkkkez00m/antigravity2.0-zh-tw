@@ -4,7 +4,7 @@ const child_process = require('child_process');
 
 const PROJECT_ID = 'antigravity2-zh-hant-tw';
 const PROJECT_NAME = 'Antigravity 2.0 繁體中文套件';
-const ENGINE_VERSION = '2.0.1';
+const ENGINE_VERSION = '2.0.2';
 const SIGNATURE = 'ZH-HANT-TW';
 
 const SIGNATURE_START = '/* --- ANTIGRAVITY ZH-HANT-TW LOCALIZATION START --- */';
@@ -185,8 +185,11 @@ function generateJs() {
             }
         }
         if (newVal === originalVal) {
+            const selectEnvironmentTranslation = map.get('Select Environment') || '選擇環境';
             const deleteProjectMatch = valNorm.match(/^Permanently delete (.+?) including (\\d+) active conversations? and (\\d+) archived conversations?\\.$/);
-            if (deleteProjectMatch) {
+            if (valNorm.includes('Select Environment')) {
+                newVal = originalVal.replace('Select Environment', selectEnvironmentTranslation);
+            } else if (deleteProjectMatch) {
                 newVal = '永久刪除 ' + deleteProjectMatch[1] + '，包括 ' + deleteProjectMatch[2] + ' 個進行中對話以及 ' + deleteProjectMatch[3] + ' 個已封存對話。';
             } else {
                 const deleteProjectPrefixMatch = valNorm.match(/^Permanently delete (.+)$/);
@@ -209,13 +212,25 @@ function generateJs() {
         return newVal;
     }
 
+    function isTranslatablePlaceholderElement(el) {
+        if (!el || el.nodeType !== Node.ELEMENT_NODE) return false;
+        const tag = el.tagName.toUpperCase();
+        return tag === 'TEXTAREA' || (tag === 'INPUT'
+            && ['search', 'text'].includes((el.getAttribute('type') || 'text').toLowerCase()));
+    }
+
     function translateAttributes(el) {
         if (!el || el.nodeType !== Node.ELEMENT_NODE) return;
         const tag = el.tagName.toUpperCase();
-        if (BLOCKED_TAGS.includes(tag)) return;
-        if (isInBlockedZone(el)) return;
+        const canTranslatePlaceholder = isTranslatablePlaceholderElement(el);
+        if (BLOCKED_TAGS.includes(tag) && !canTranslatePlaceholder) return;
+        const className = el.className || '';
+        if (canTranslatePlaceholder && (el.getAttribute('contenteditable') === 'true'
+            || (typeof className === 'string' && BLOCKED_CLASSES.some(cls => className.includes(cls))))) return;
+        if (isInBlockedZone(canTranslatePlaceholder ? (el.parentElement || el) : el)) return;
 
         for (const attr of ['placeholder', 'title', 'aria-label']) {
+            if ((tag === 'INPUT' || tag === 'TEXTAREA') && attr !== 'placeholder') continue;
             const v = el.getAttribute(attr);
             if (!v) continue;
             const t = norm(v);
@@ -447,15 +462,19 @@ function generateJs() {
                 translateNode(m.target);
             } else if (m.type === 'attributes') {
                 const el = m.target;
-                if (el && el.nodeType === Node.ELEMENT_NODE && !isInBlockedZone(el)) {
-                    const attr = m.attributeName;
-                    if (attr === 'title' || attr === 'aria-label' || attr === 'placeholder') {
-                        const v = el.getAttribute(attr);
-                        if (v) {
-                            const translated = translateString(v);
-                            if (translated !== v) {
-                                el.setAttribute(attr, translated);
-                            }
+                if (!el || el.nodeType !== Node.ELEMENT_NODE) continue;
+                const attr = m.attributeName;
+                const canTranslatePlaceholder = attr === 'placeholder' && isTranslatablePlaceholderElement(el);
+                const className = el.className || '';
+                if (canTranslatePlaceholder && (el.getAttribute('contenteditable') === 'true'
+                    || (typeof className === 'string' && BLOCKED_CLASSES.some(cls => className.includes(cls))))) continue;
+                if (isInBlockedZone(canTranslatePlaceholder ? (el.parentElement || el) : el)) continue;
+                if (attr === 'title' || attr === 'aria-label' || attr === 'placeholder') {
+                    const v = el.getAttribute(attr);
+                    if (v) {
+                        const translated = translateString(v);
+                        if (translated !== v) {
+                            el.setAttribute(attr, translated);
                         }
                     }
                 }
@@ -494,7 +513,12 @@ function generateJs() {
     const origSetAttribute = Element.prototype.setAttribute;
     Element.prototype.setAttribute = function(name, value) {
         if (typeof value === 'string' && (name === 'title' || name === 'aria-label' || name === 'placeholder')) {
-            if (!isInBlockedZone(this) && !BLOCKED_TAGS.includes(this.tagName.toUpperCase())) {
+            const canTranslatePlaceholder = name === 'placeholder' && isTranslatablePlaceholderElement(this);
+            const className = this.className || '';
+            if (!(canTranslatePlaceholder && (this.getAttribute('contenteditable') === 'true'
+                || (typeof className === 'string' && BLOCKED_CLASSES.some(cls => className.includes(cls)))))
+                && !isInBlockedZone(canTranslatePlaceholder ? (this.parentElement || this) : this)
+                && (!BLOCKED_TAGS.includes(this.tagName.toUpperCase()) || canTranslatePlaceholder)) {
                 const translated = translateString(value);
                 return origSetAttribute.call(this, name, translated);
             }

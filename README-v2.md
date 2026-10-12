@@ -1,22 +1,22 @@
-# Antigravity 2.0 繁體中文套件 — v2.0.1
+# Antigravity 2.0 繁體中文套件 — v2.0.2
 
-> [返回 v1.0.8 傳統安裝流程說明](README.md)
+> [返回 v1.0.9 傳統安裝流程說明](README.md)
 
-## v2.0.1
+## v2.0.2
 
-v2.0.1 主要改善安裝流程，讓一般使用者可以透過 Windows / macOS 安裝檔快速套用繁體中文介面。
+v2.0.2 更新翻譯字典與本地化引擎，以對應 Antigravity 2.0 v2.22.0 介面，並延續 Windows / macOS 安裝器流程。
 
 請先留意兩件事：
 
 - 電腦仍需先安裝 Node.js LTS。
 - 若電腦已具備 Node.js / npm，即可使用安裝檔進行一鍵安裝，不需要手動執行 `npm install`。
 
-> ⚠️ v2.0.1 的一鍵安裝是「免手動 `npm install`」，不是「免安裝 Node.js」。
+> ⚠️ v2.0.2 的一鍵安裝是「免手動 `npm install`」，不是「免安裝 Node.js」。
 > 安裝器不會內建 Node.js，也不會自動替使用者安裝 Node.js。
 
-## v2.0.1 工具畫面
+## v2.0.2 工具畫面
 
-v2.0.1 新增 Windows / macOS 圖形化安裝與還原工具。使用者只要先安裝 Node.js LTS，即可透過安裝檔完成套用，不需要手動執行 `npm install`。
+v2.0.2 提供 Windows / macOS 圖形化安裝與還原工具。使用者只要先安裝 Node.js LTS，即可透過安裝檔完成套用，不需要手動執行 `npm install`。
 
 ### Windows
 
@@ -62,7 +62,7 @@ npm -v
 安裝：
 
 ```text
-Antigravity-ZH-Hant-TW-v2.0.1-Windows-Install.exe
+Antigravity-ZH-Hant-TW-v2.0.2-Windows-Install.exe
 ```
 
 > ⚠️ **Windows SmartScreen 提醒**：目前 Windows 安裝檔尚未加入 Authenticode 程式碼簽章，因此 Windows 可能顯示 SmartScreen 警告。請只從本專案的 [GitHub Releases](../../releases) 下載安裝檔，不要使用來路不明的轉載檔案。
@@ -72,7 +72,7 @@ Antigravity-ZH-Hant-TW-v2.0.1-Windows-Install.exe
 安裝：
 
 ```
-Antigravity-ZH-Hant-TW-v2.0.1-macOS-Install.pkg
+Antigravity-ZH-Hant-TW-v2.0.2-macOS-Install.pkg
 ```
 
 安裝完成後，重新開啟 Antigravity，即可看到繁體中文介面。
@@ -86,29 +86,29 @@ Antigravity-ZH-Hant-TW-v2.0.1-macOS-Install.pkg
 ### Windows
 
 ```text
-Antigravity-ZH-Hant-TW-v2.0.1-Windows-Restore.exe
+Antigravity-ZH-Hant-TW-v2.0.2-Windows-Restore.exe
 ```
 
 ### macOS
 
 ```
-Antigravity-ZH-Hant-TW-v2.0.1-macOS-Restore.pkg
+Antigravity-ZH-Hant-TW-v2.0.2-macOS-Restore.pkg
 ```
 
 還原會使用安裝時建立的備份，將 Antigravity 回復為官方原版。
 
 ## 安全性特色
 
-v2.0.1 保留原有安全性設計：
+v2.0.2 保留原有安全性設計：
 
 - 不內建 Node.js，使用者需自行從官方網站安裝。
 - 安裝檔只是將安裝流程自動化，所需套件仍會從官方來源下載，因此安裝時需要網路連線。
 - 不散布 Antigravity 官方 `app.asar` 或任何官方檔案。
 - 安裝與還原都在使用者電腦本機執行。
 - 安裝時會保留備份，方便日後還原官方原版。
-- 延續既有翻譯核心與安全檢查，只改善安裝體驗。
+- 延續既有翻譯核心與安全檢查，並更新字典與引擎。
 
-v2.0.1 的主要改變是讓安裝更簡單，不是放寬安全限制。
+v2.0.2 延續原有安裝與安全性設計，本次更新不會放寬安全限制。
 
 ## 授權
 
@@ -118,6 +118,6 @@ v2.0.1 的主要改變是讓安裝更簡單，不是放寬安全限制。
 
 ## 發行狀態
 
-v2.0.1 已完成 Windows / macOS 安裝檔建置驗證，提供正式版安裝器流程。
+v2.0.2 已完成字典與引擎更新，並提供 Windows / macOS 正式版安裝器流程。
 
-若偏好傳統 zip / `npm install` / 腳本安裝流程，請參考 v1.0.8 README 的既有方式操作。
+若偏好傳統 zip / `npm install` / 腳本安裝流程，請參考 v1.0.9 README 的既有方式操作。
