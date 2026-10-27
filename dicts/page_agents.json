@@ -40,5 +40,12 @@
     "Automatically migrate legacy workflows (.agents/workflows/ or ~/.gemini/config/workflows/) to skills (.agents/skills/ or ~/.gemini/config/skills/). Scans for existing workflows, creates target SKILL.md files, and archives old workflow files.": "自動將舊版工作流程（.agents/workflows/ 或 ~/.gemini/config/workflows/）遷移為技能（.agents/skills/ 或 ~/.gemini/config/skills/）。會掃描現有工作流程、建立目標 SKILL.md 檔案，並封存舊的工作流程檔案。",
     "Automatically migrate legacy workflows to modern skills across global and workspace configurations. Scans for existing workflows, creates target SKILL.md files, and safely archives old workflow files.": "自動在全域與工作區設定中，將舊版工作流程遷移為現代技能。會掃描現有工作流程、建立目標 SKILL.md 檔案，並安全封存舊的工作流程檔案。",
     "permissioned-github": "GitHub 權限操作",
-    "Guidelines for interacting with GitHub and request permissions from the user when commands fail due to restrictions in the agent environment.": "與 GitHub 互動，以及當指令因 Agent 環境限制而失敗時向使用者請求權限的指引。"
+    "Guidelines for interacting with GitHub and request permissions from the user when commands fail due to restrictions in the agent environment.": "與 GitHub 互動，以及當指令因 Agent 環境限制而失敗時向使用者請求權限的指引。",
+    "Manage your notification preferences.": "管理您的通知偏好設定。",
+    "Enable Notifications for Agent": "啟用 Agent 通知",
+    "Show system notifications when your action is needed or the agent finishes.": "需要您操作或 Agent 完成工作時顯示系統通知。",
+    "Play a sound when your action is needed or the agent finishes.": "需要您操作或 Agent 完成工作時播放音效。",
+    "Volume": "音量",
+    "Set the volume of agent sounds.": "設定 Agent 音效的音量。",
+    "For paid Pro plans, Argon quota is separate. Higher Argon quota (included as part of the larger Gemini quota bucket) is available on Ultra plans.": "付費 Pro 方案的 Argon 配額會獨立計算。Ultra 方案則提供更高的 Argon 配額（包含在較大的 Gemini 配額池中）。"
 }

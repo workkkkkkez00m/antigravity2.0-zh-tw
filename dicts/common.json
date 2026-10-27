@@ -222,5 +222,9 @@
     "Select Environment": "選擇環境",
     "Add context": "新增內容",
     "Worktrees are available for Git repositories": "Git 儲存庫可使用工作樹",
-    "No plugins match your search.": "找不到符合搜尋條件的外掛。"
+    "No plugins match your search.": "找不到符合搜尋條件的外掛。",
+    "Trigger": "觸發條件",
+    "Time Zone": "時區",
+    "Mark All as Read": "全部標示為已讀",
+    "Archive": "封存"
 }

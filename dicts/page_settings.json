@@ -434,6 +434,7 @@
     "Plan": "方案",
     "Weekly Limit": "每週限制",
     "Five Hour Limit": "五小時限制",
+    "Gemini 4 Argon Weekly Limit": "Gemini 4 Argon 每週限制",
     "Within each group, models share a weekly limit and a 5-hour limit. Quota is consumed proportionally to the cost of the tokens. Thus, limits will last longer with shorter tasks or using more cost-effective models. The 5-hour limit smooths out aggregate demand to fairly distribute global capacity across all users, while your weekly limit is tied directly to your individual tier.": "在同一群組中，各模型共享每週限制與五小時限制。配額的消耗與 Token 費用成比例。因此，使用較短的任務或成本效益更高的模型，限制將持續更長時間。五小時限制可平滑整體需求，以公平地將全球算力分配給所有使用者；而每週限制則直接與您個人的訂閱方案綁定。",
     "Bug Report": "錯誤回報",
     "Feature Request": "功能請求",
@@ -482,5 +483,11 @@
     "Connect": "連線",
     "Local Windows environment": "本機 Windows 環境",
     "The app is currently connected to a WSL distro. Reopening locally relaunches it directly on Windows.": "應用程式目前已連線至 WSL 發行版。在本機重新開啟後，應用程式會重新啟動並直接在 Windows 上執行。",
-    "Reopen Locally": "在本機重新開啟"
+    "Reopen Locally": "在本機重新開啟",
+    "Give Feedback": "提供意見回饋",
+    "New Tab": "新增分頁",
+    "Archive This Conversation": "封存此對話",
+    "Toggle Maximize Auxiliary Pane": "切換輔助窗格最大化",
+    "Toggle Overview Panel": "切換概覽面板",
+    "Mark All as Read": "全部標示為已讀"
 }
