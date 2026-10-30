@@ -226,5 +226,18 @@
     "Trigger": "觸發條件",
     "Time Zone": "時區",
     "Mark All as Read": "全部標示為已讀",
-    "Archive": "封存"
+    "Archive": "封存",
+    "Local Checkout": "這台電腦",
+    "View Usage": "查看用量",
+    "Usage": "用量",
+    "Free users and Google AI Plus users receive the minimum base limits on Antigravity. You can upgrade to Google AI Pro or above to receive higher rate limits.": "免費使用者與 Google AI Plus 使用者在 Antigravity 中享有最低的基本用量限制。您可以升級至 Google AI Pro 或更高階方案，以取得更高的速率限制。",
+    "View plans": "查看方案",
+    "Auto (Preview)": "自動（預覽版）",
+    "Automatically decide if commands run.": "自動判斷是否執行指令。",
+    "Use Global Settings": "使用全域設定",
+    "This project overrides your global permission settings.": "此專案會覆寫您的全域權限設定。",
+    "Record Audio": "語音輸入",
+    "Send Message": "傳送訊息",
+    "Search Across Conversations": "跨對話搜尋",
+    "Search Conversations": "搜尋對話"
 }
