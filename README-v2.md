@@ -1,22 +1,22 @@
-# Antigravity 2.0 繁體中文套件 — v2.0.3
+# Antigravity 2.0 繁體中文套件 — v2.0.4
 
-> [返回 v1.0.10 傳統安裝流程說明](README.md)
+> [返回 v1.0.11 傳統安裝流程說明](README.md)
 
-## v2.0.3
+## v2.0.4
 
-v2.0.3 更新翻譯字典與版本資訊，以 Antigravity 2.0 v2.26.0 介面為基準。目前 6 個字典檔共 950 筆翻譯詞彙，並延續 Windows / macOS 安裝器流程。
+v2.0.4 更新翻譯字典與版本資訊，以 Antigravity 2.0 v2.28.2 介面為基準。目前 6 個字典檔共 983 筆翻譯詞彙，較前版增加 33 筆，並預計同步 Windows / macOS 安裝器流程。
 
 請先留意兩件事：
 
 - 電腦仍需先安裝 Node.js LTS。
 - 若電腦已具備 Node.js / npm，即可使用安裝檔進行一鍵安裝，不需要手動執行 `npm install`。
 
-> ⚠️ v2.0.3 的一鍵安裝是「免手動 `npm install`」，不是「免安裝 Node.js」。
+> ⚠️ v2.0.4 預計同步提供的一鍵安裝是「免手動 `npm install`」，不是「免安裝 Node.js」。
 > 安裝器不會內建 Node.js，也不會自動替使用者安裝 Node.js。
 
-## v2.0.3 工具畫面
+## v2.0.4 工具畫面
 
-v2.0.3 提供 Windows / macOS 圖形化安裝與還原工具。使用者只要先安裝 Node.js LTS，即可透過安裝檔完成套用，不需要手動執行 `npm install`。
+v2.0.4 預計同步提供 Windows / macOS 圖形化安裝與還原工具。使用者只要先安裝 Node.js LTS，即可透過安裝檔完成套用，不需要手動執行 `npm install`。
 
 ### Windows
 
@@ -62,7 +62,7 @@ npm -v
 安裝：
 
 ```text
-Antigravity-ZH-Hant-TW-v2.0.3-Windows-Install.exe
+Antigravity-ZH-Hant-TW-v2.0.4-Windows-Install.exe
 ```
 
 > ⚠️ **Windows SmartScreen 提醒**：目前 Windows 安裝檔尚未加入 Authenticode 程式碼簽章，因此 Windows 可能顯示 SmartScreen 警告。請只從本專案的 [GitHub Releases](../../releases) 下載安裝檔，不要使用來路不明的轉載檔案。
@@ -72,7 +72,7 @@ Antigravity-ZH-Hant-TW-v2.0.3-Windows-Install.exe
 安裝：
 
 ```
-Antigravity-ZH-Hant-TW-v2.0.3-macOS-Install.pkg
+Antigravity-ZH-Hant-TW-v2.0.4-macOS-Install.pkg
 ```
 
 安裝完成後，重新開啟 Antigravity，即可看到繁體中文介面。
@@ -86,20 +86,20 @@ Antigravity-ZH-Hant-TW-v2.0.3-macOS-Install.pkg
 ### Windows
 
 ```text
-Antigravity-ZH-Hant-TW-v2.0.3-Windows-Restore.exe
+Antigravity-ZH-Hant-TW-v2.0.4-Windows-Restore.exe
 ```
 
 ### macOS
 
 ```
-Antigravity-ZH-Hant-TW-v2.0.3-macOS-Restore.pkg
+Antigravity-ZH-Hant-TW-v2.0.4-macOS-Restore.pkg
 ```
 
 還原會使用安裝時建立的備份，將 Antigravity 回復為官方原版。
 
 ## 安全性特色
 
-v2.0.3 保留原有安全性設計：
+v2.0.4 保留原有安全性設計：
 
 - 不內建 Node.js，使用者需自行從官方網站安裝。
 - 安裝檔只是將安裝流程自動化，所需套件仍會從官方來源下載，因此安裝時需要網路連線。
@@ -108,7 +108,7 @@ v2.0.3 保留原有安全性設計：
 - 安裝時會保留備份，方便日後還原官方原版。
 - 延續既有翻譯核心與安全檢查，並更新翻譯字典與版本資訊。
 
-v2.0.3 延續原有安裝與安全性設計，本次更新不會放寬安全限制。
+v2.0.4 延續原有安裝與安全性設計，本次更新不會放寬安全限制。
 
 ## 授權
 
@@ -118,6 +118,6 @@ v2.0.3 延續原有安裝與安全性設計，本次更新不會放寬安全限�
 
 ## 發行狀態
 
-v2.0.3 已完成翻譯字典與版本資訊更新，並提供 Windows / macOS 正式版安裝器流程。
+v2.0.4 已完成翻譯字典與版本資訊更新；Windows / macOS 安裝器預計同步提供，尚待完成驗證。
 
-若偏好傳統 zip / `npm install` / 腳本安裝流程，請參考 v1.0.10 README 的既有方式操作。
+若偏好傳統 zip / `npm install` / 腳本安裝流程，請參考 v1.0.11 README 的既有方式操作。

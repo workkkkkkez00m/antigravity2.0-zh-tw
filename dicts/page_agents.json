@@ -47,5 +47,10 @@
     "Play a sound when your action is needed or the agent finishes.": "需要您操作或 Agent 完成工作時播放音效。",
     "Volume": "音量",
     "Set the volume of agent sounds.": "設定 Agent 音效的音量。",
-    "For paid Pro plans, Argon quota is separate. Higher Argon quota (included as part of the larger Gemini quota bucket) is available on Ultra plans.": "付費 Pro 方案的 Argon 配額會獨立計算。Ultra 方案則提供更高的 Argon 配額（包含在較大的 Gemini 配額池中）。"
+    "For paid Pro plans, Argon quota is separate. Higher Argon quota (included as part of the larger Gemini quota bucket) is available on Ultra plans.": "付費 Pro 方案的 Argon 配額會獨立計算。Ultra 方案則提供更高的 Argon 配額（包含在較大的 Gemini 配額池中）。",
+    "Models within this group: Gemini Flash, Gemini Pro": "此群組中的模型：Gemini Flash、Gemini Pro",
+    "Models within this group: Claude Opus, Claude Sonnet, GPT-OSS": "此群組中的模型：Claude Opus、Claude Sonnet、GPT-OSS",
+    "Low": "低",
+    "Medium": "中",
+    "High": "高"
 }

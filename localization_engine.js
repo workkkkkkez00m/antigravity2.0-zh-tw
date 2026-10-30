@@ -4,7 +4,7 @@ const child_process = require('child_process');
 
 const PROJECT_ID = 'antigravity2-zh-hant-tw';
 const PROJECT_NAME = 'Antigravity 2.0 繁體中文套件';
-const ENGINE_VERSION = '2.0.3';
+const ENGINE_VERSION = '2.0.4';
 const SIGNATURE = 'ZH-HANT-TW';
 
 const SIGNATURE_START = '/* --- ANTIGRAVITY ZH-HANT-TW LOCALIZATION START --- */';
@@ -178,9 +178,21 @@ function generateJs() {
         } else if (lowerMap.has(valLower)) {
             newVal = lowerMap.get(valLower);
         } else {
-            for (const [key, translated] of longEntries) {
-                if (key.length > 20 && valNorm.includes(key)) {
-                    newVal = newVal.split(key).join(translated);
+            const shortcutMatch = valNorm.match(/^(.+?)(\\s+(?:↵|⏎|Enter|Return))$/);
+            if (shortcutMatch) {
+                const label = shortcutMatch[1];
+                const labelLower = label.toLowerCase();
+                if (map.has(label)) {
+                    newVal = map.get(label) + shortcutMatch[2];
+                } else if (lowerMap.has(labelLower)) {
+                    newVal = lowerMap.get(labelLower) + shortcutMatch[2];
+                }
+            }
+            if (newVal === originalVal) {
+                for (const [key, translated] of longEntries) {
+                    if (key.length > 20 && valNorm.includes(key)) {
+                        newVal = newVal.split(key).join(translated);
+                    }
                 }
             }
         }
@@ -294,6 +306,85 @@ function generateJs() {
         return true;
     }
 
+    const splitPhraseRules = [
+        {
+            key: 'when working in this project.',
+            pattern: /when\\s*working\\s*in\\s*this\\s*project\\s*\\./i
+        },
+        {
+            key: 'when working in these conversations.',
+            pattern: /when\\s*working\\s*in\\s*these\\s*conversations\\s*\\./i
+        }
+    ];
+    const splitPhraseFragmentPattern = /\\b(?:when|working|in|this|project|these|conversations)\\b/i;
+    const splitPhraseInteractiveSelector = 'a, button, input, textarea, select, option, [role="link"], [role="button"], [contenteditable="true"]';
+    const splitPhraseMaxParentTextLength = 400;
+    const splitPhraseMaxParentDepth = 4;
+
+    function translateSplitPhraseTextNode(node) {
+        if (!node || node.nodeType !== Node.TEXT_NODE || isInBlockedZone(node)) return false;
+
+        let parent = node.parentElement;
+        for (let depth = 0; parent && depth < splitPhraseMaxParentDepth; depth++) {
+            if (isInBlockedZone(parent)) return false;
+
+            const parentText = parent.textContent || '';
+            if (parentText.length > splitPhraseMaxParentTextLength) break;
+            const matchedRule = splitPhraseRules.find(rule => rule.pattern.test(parentText));
+            if (!matchedRule) {
+                parent = parent.parentElement;
+                continue;
+            }
+
+            const textNodes = [];
+            let offset = 0;
+            const walker = document.createTreeWalker(parent, NodeFilter.SHOW_TEXT);
+            while (walker.nextNode()) {
+                const current = walker.currentNode;
+                const value = current.nodeValue || '';
+                textNodes.push({ node: current, start: offset, end: offset + value.length });
+                offset += value.length;
+            }
+
+            const combinedText = textNodes.map(entry => entry.node.nodeValue || '').join('');
+            const match = combinedText.match(matchedRule.pattern);
+            if (!match || match.index === undefined) {
+                parent = parent.parentElement;
+                continue;
+            }
+
+            const translated = map.get(matchedRule.key)
+                || lowerMap.get(matchedRule.key.toLowerCase());
+            if (!translated) return false;
+
+            const matchStart = match.index;
+            const matchEnd = matchStart + match[0].length;
+            const matchedNodes = textNodes.filter(entry => entry.start < matchEnd && entry.end > matchStart);
+            if (!matchedNodes.length) return false;
+
+            for (const entry of matchedNodes) {
+                const entryParent = entry.node.parentElement;
+                if (entryParent && entryParent.closest(splitPhraseInteractiveSelector)) return false;
+            }
+
+            let replacementWritten = false;
+            for (const entry of matchedNodes) {
+                const value = entry.node.nodeValue || '';
+                const localStart = Math.max(matchStart, entry.start) - entry.start;
+                const localEnd = Math.min(matchEnd, entry.end) - entry.start;
+                const replacement = replacementWritten ? '' : translated;
+                replacementWritten = true;
+                entry.node.nodeValue = value.slice(0, localStart) + replacement + value.slice(localEnd);
+                done.add(entry.node);
+                setTimeout(() => done.delete(entry.node), 1000);
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     function hasTranslatableEnglishText(node) {
         if (!node) return false;
         const text = node.textContent || '';
@@ -399,7 +490,9 @@ function generateJs() {
         try {
             if (!node) return;
             if (done.has(node)) {
-                if (node.nodeType !== Node.TEXT_NODE || translateString(node.nodeValue) === node.nodeValue) return;
+                if (node.nodeType !== Node.TEXT_NODE) return;
+                const currentValue = node.nodeValue || '';
+                if (translateString(currentValue) === currentValue && !splitPhraseFragmentPattern.test(currentValue)) return;
                 done.delete(node);
             }
 
@@ -418,6 +511,8 @@ function generateJs() {
                 if (translateSplitTextElement(node.parentElement)) return;
 
                 let newVal = translateString(originalVal);
+
+                if (newVal === originalVal && translateSplitPhraseTextNode(node)) return;
 
                 if (newVal !== originalVal) {
                     node.nodeValue = newVal;
@@ -833,11 +928,9 @@ function install20(resourcesDir) {
     const cleanedPreload = cleanJsContent(preloadContent);
     const translationJs = generateJs();
     fs.writeFileSync(preloadPath, cleanedPreload + '\n' + translationJs, 'utf-8');
-    console.log('[修改] preload.js 注入完成。');
 
     const menuPath = path.join(tempDir, 'dist', 'menu.js');
     if (fs.existsSync(menuPath)) {
-        console.log('[修改] 正在注入系統選單文字...');
         const menuContent = fs.readFileSync(menuPath, 'utf-8');
         const menuCleaned = cleanMenuJsContent(menuContent);
         const menuTranslationJs = createMenuTranslationPatch();
@@ -848,7 +941,6 @@ function install20(resourcesDir) {
         if (idx !== -1) {
             const patchedMenuContent = menuCleaned.substring(0, idx) + menuTranslationJs + '\n    ' + menuCleaned.substring(idx);
             fs.writeFileSync(menuPath, patchedMenuContent, 'utf-8');
-            console.log('[修改] 系統選單文字注入完成。');
         } else {
             console.warn('[警告] 找不到 menu.js 插入點，略過系統選單文字注入。');
         }
@@ -856,7 +948,6 @@ function install20(resourcesDir) {
 
     const trayPath = path.join(tempDir, 'dist', 'tray.js');
     if (fs.existsSync(trayPath)) {
-        console.log('[修改] 正在注入工作列選單文字...');
         const trayContent = fs.readFileSync(trayPath, 'utf-8');
         const trayCleaned = cleanTrayJsContent(trayContent);
 
@@ -870,12 +961,10 @@ function install20(resourcesDir) {
         trayPatched = trayPatched.replace(countRegex, replacementCount);
 
         fs.writeFileSync(trayPath, trayPatched, 'utf-8');
-        console.log('[修改] 工作列選單文字注入完成。');
     }
 
     const loadingPath = path.join(tempDir, 'dist', 'loadingOverlay.js');
     if (fs.existsSync(loadingPath)) {
-        console.log('[修改] 正在調整啟動畫面文字...');
         let loadingContent = fs.readFileSync(loadingPath, 'utf-8');
 
         const targetText = '<div class="text">Loading Antigravity</div>';
@@ -883,7 +972,6 @@ function install20(resourcesDir) {
         loadingContent = loadingContent.replace(targetText, replacementText);
 
         fs.writeFileSync(loadingPath, loadingContent, 'utf-8');
-        console.log('[修改] 啟動畫面文字調整完成。');
     }
 
     console.log('[打包] 正在重新打包 app.asar...');
