@@ -52,5 +52,21 @@
     "Models within this group: Claude Opus, Claude Sonnet, GPT-OSS": "此群組中的模型：Claude Opus、Claude Sonnet、GPT-OSS",
     "Low": "低",
     "Medium": "中",
-    "High": "高"
+    "High": "高",
+    "Search Projects…": "搜尋專案…",
+    "Work in a New Worktree": "在新的工作樹中作業",
+    "Keeps your checkout untouched": "不會變更目前的工作目錄",
+    "Files": "檔案",
+    "Folder": "資料夾",
+    "Mentions": "提及",
+    "Actions": "操作",
+    "Connectors": "連接器",
+    "No connectors available in this project": "此專案沒有可用的連接器",
+    "Browse Connectors": "瀏覽連接器",
+    "on for this conversation": "個已在此對話啟用",
+    "Allow write access to this path?": "允許寫入此路徑嗎？",
+    "Yes, allow this time": "是，僅允許這一次",
+    "Yes, and always allow in this conversation": "是，並在此對話中一律允許",
+    "Yes, and always allow": "是，並一律允許",
+    "(tell the agent what to do instead)": "（改為告訴 Agent 要如何處理）"
 }

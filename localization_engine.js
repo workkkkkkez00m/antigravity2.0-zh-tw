@@ -4,7 +4,7 @@ const child_process = require('child_process');
 
 const PROJECT_ID = 'antigravity2-zh-hant-tw';
 const PROJECT_NAME = 'Antigravity 2.0 繁體中文套件';
-const ENGINE_VERSION = '1.0.11';
+const ENGINE_VERSION = '1.0.12';
 const SIGNATURE = 'ZH-HANT-TW';
 
 const SIGNATURE_START = '/* --- ANTIGRAVITY ZH-HANT-TW LOCALIZATION START --- */';
@@ -169,6 +169,10 @@ function generateJs() {
         if (!originalVal || typeof originalVal !== 'string') return originalVal;
         const valNorm = norm(originalVal);
         if (!valNorm) return originalVal;
+        const greetingMatch = originalVal.match(/^Hi (.+), what can we get done today\\?$/);
+        if (greetingMatch && greetingMatch[0] === originalVal) {
+            return '嗨，' + greetingMatch[1] + '，今天想完成什麼？';
+        }
         
         const valLower = valNorm.toLowerCase();
         let newVal = originalVal;
@@ -254,6 +258,22 @@ function generateJs() {
         }
     }
 
+    function isApprovalNoTextNode(node) {
+        if (!/^\\s*(?:4\\s+)?No\\s*$/.test(node.nodeValue || '') || !node.parentElement) return false;
+        const placeholder = map.get('(tell the agent what to do instead)');
+        let option = node.parentElement;
+        for (let depth = 0; option && depth < 4; depth++, option = option.parentElement) {
+            const hasPlaceholder = Array.from(option.querySelectorAll('input[placeholder], textarea[placeholder]')).some(el => {
+                const value = el.getAttribute('placeholder');
+                return value === '(tell the agent what to do instead)' || value === placeholder;
+            });
+            if (hasPlaceholder) {
+                return option.querySelectorAll('[role="radio"], input[type="radio"]').length <= 1;
+            }
+        }
+        return false;
+    }
+
     function sweepAttributes(root) {
         if (!root || !root.querySelectorAll) return;
         const els = root.querySelectorAll('[title], [aria-label], [placeholder]');
@@ -263,7 +283,8 @@ function generateJs() {
     }
 
     const splitTextTranslationKeys = new Set([
-        'No Projects found'
+        'No Projects found',
+        'No automations yet'
     ]);
 
     const splitTextTranslationKeysLower = new Set(
@@ -510,7 +531,9 @@ function generateJs() {
                 if (isInBlockedZone(node)) return;
                 if (translateSplitTextElement(node.parentElement)) return;
 
-                let newVal = translateString(originalVal);
+                let newVal = isApprovalNoTextNode(node)
+                    ? originalVal.replace(/No(?=\\s*$)/, '否')
+                    : translateString(originalVal);
 
                 if (newVal === originalVal && translateSplitPhraseTextNode(node)) return;
 
