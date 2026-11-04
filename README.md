@@ -37,11 +37,11 @@ Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available p
 
 ### 主介面
 
-![Antigravity 2.0 繁體中文主介面](images/screenshot-main-ui.JPG)
+![Antigravity 2.0 繁體中文主介面](images/screenshot-main-ui-v2.29.0.jpg)
 
 ### 設定頁
 
-![Antigravity 2.0 繁體中文設定頁](images/screenshot-settings.JPG)
+![Antigravity 2.0 繁體中文設定頁](images/screenshot-settings-v2.29.0.jpg)
 
 ---
 
