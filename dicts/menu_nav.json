@@ -57,5 +57,10 @@
     "Zoom Out": "縮小",
     "Reset Zoom": "重設縮放",
     "Toggle Developer Tools": "切換開發人員工具",
-    "New Window": "新增視窗"
+    "New Window": "新增視窗",
+    "Sort Projects": "專案排序",
+    "Custom Order": "自訂順序",
+    "Last 7 days": "過去 7 天",
+    "Auto Pin": "自動釘選",
+    "Archived Only": "僅顯示已封存"
 }
