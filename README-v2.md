@@ -1,22 +1,22 @@
-# Antigravity 2.0 繁體中文套件 — v2.0.5
+# Antigravity 2.0 繁體中文套件 — v2.0.6
 
-> [返回 v1.0.12 傳統安裝流程說明](README.md)
+> [返回 v1.0.13 傳統安裝流程說明](README.md)
 
-## v2.0.5
+## v2.0.6
 
-v2.0.5 以 Antigravity 2.0 v2.29.0 介面為字典基準。目前 6 個字典檔共 1,058 筆翻譯詞彙，較 v2.0.4 增加 75 筆；新增自動化、專案、連接器、瀏覽器、語音與無障礙相關詞彙，並改善問候語、確認選項及分段文字的翻譯。
+v2.0.6 已將字典基準更新至 Antigravity 2.0 v2.31.0 介面。目前 6 個字典檔共 1,104 筆翻譯詞彙，較 v2.0.5 增加 46 筆；新增 Swarm 自動化專案提示、動態自動化名稱、語音與介面配置設定、MCP 工具說明等詞彙．翻譯引擎已擴充帶姓名的問候語翻譯，並改善跨文字節點的 Swarm 自動化專案提示、動態自動化名稱等翻譯．
 
 請先留意兩件事：
 
 - 電腦仍需先安裝 Node.js LTS。
 - 若電腦已具備 Node.js / npm，即可使用安裝檔進行一鍵安裝，不需要手動執行 `npm install`。
 
-> ⚠️ v2.0.5 的一鍵安裝是「免手動 `npm install`」，不是「免安裝 Node.js」。
+> ⚠️ v2.0.6 的一鍵安裝是「免手動 `npm install`」，不是「免安裝 Node.js」。
 > 安裝器不會內建 Node.js，也不會自動替使用者安裝 Node.js。
 
-## v2.0.5 工具畫面
+## v2 安裝器工具畫面
 
-v2.0.5 提供 Windows / macOS 圖形化安裝與還原工具。使用者只要先安裝 Node.js LTS，即可透過安裝檔完成套用，不需要手動執行 `npm install`。
+v2 安裝器提供 Windows / macOS 圖形化安裝與還原流程。使用者只要先安裝 Node.js LTS，即可透過安裝檔完成套用，不需要手動執行 `npm install`。下列為既有工具畫面；v2.0.6 安裝器的驗證狀態請見文末。
 
 ### Windows
 
@@ -62,7 +62,7 @@ npm -v
 安裝：
 
 ```text
-Antigravity-ZH-Hant-TW-v2.0.5-Windows-Install.exe
+Antigravity-ZH-Hant-TW-v2.0.6-Windows-Install.exe
 ```
 
 > ⚠️ **Windows SmartScreen 提醒**：目前 Windows 安裝檔尚未加入 Authenticode 程式碼簽章，因此 Windows 可能顯示 SmartScreen 警告。請只從本專案的 [GitHub Releases](../../releases) 下載安裝檔，不要使用來路不明的轉載檔案。
@@ -72,7 +72,7 @@ Antigravity-ZH-Hant-TW-v2.0.5-Windows-Install.exe
 安裝：
 
 ```
-Antigravity-ZH-Hant-TW-v2.0.5-macOS-Install.pkg
+Antigravity-ZH-Hant-TW-v2.0.6-macOS-Install.pkg
 ```
 
 安裝完成後，重新開啟 Antigravity，即可看到繁體中文介面。
@@ -86,20 +86,20 @@ Antigravity-ZH-Hant-TW-v2.0.5-macOS-Install.pkg
 ### Windows
 
 ```text
-Antigravity-ZH-Hant-TW-v2.0.5-Windows-Restore.exe
+Antigravity-ZH-Hant-TW-v2.0.6-Windows-Restore.exe
 ```
 
 ### macOS
 
 ```
-Antigravity-ZH-Hant-TW-v2.0.5-macOS-Restore.pkg
+Antigravity-ZH-Hant-TW-v2.0.6-macOS-Restore.pkg
 ```
 
 還原會使用安裝時建立的備份，將 Antigravity 回復為官方原版。
 
 ## 安全性特色
 
-v2.0.5 保留原有安全性設計：
+v2 安裝器沿用原有安全性設計：
 
 - 不內建 Node.js，使用者需自行從官方網站安裝。
 - 安裝檔只是將安裝流程自動化，所需套件仍會從官方來源下載，因此安裝時需要網路連線。
@@ -108,7 +108,7 @@ v2.0.5 保留原有安全性設計：
 - 安裝時會保留備份，方便日後還原官方原版。
 - 延續既有翻譯核心與安全檢查，並更新翻譯字典與版本資訊。
 
-v2.0.5 延續原有安裝與安全性設計，本次更新不會放寬安全限制。
+v2.0.6 的字典與版本資訊已更新，原有安裝流程與安全性說明仍適用。
 
 ## 授權
 
@@ -118,6 +118,6 @@ v2.0.5 延續原有安裝與安全性設計，本次更新不會放寬安全限�
 
 ## 發行狀態
 
-v2.0.5 已完成翻譯字典與版本資訊更新；Windows 與 macOS 均已完成安裝、還原及 UI 驗證。
+v2.0.6 已完成翻譯字典與版本資訊更新。v1.0.13 傳統流程與 v2.0.6 安裝器均已於 Windows 與 macOS 完成安裝、還原及 UI 驗證。使用安裝器前，請確認 [GitHub Releases](../../releases) 的實際發行資產與說明。
 
-若偏好傳統 zip / `npm install` / 腳本安裝流程，請參考 v1.0.12 README 的既有方式操作。
+若偏好傳統 zip / `npm install` / 腳本安裝流程，請參考 v1.0.13 README 的既有方式操作。
