@@ -4,7 +4,7 @@ const child_process = require('child_process');
 
 const PROJECT_ID = 'antigravity2-zh-hant-tw';
 const PROJECT_NAME = 'Antigravity 2.0 繁體中文套件';
-const ENGINE_VERSION = '2.0.5';
+const ENGINE_VERSION = '2.0.6';
 const SIGNATURE = 'ZH-HANT-TW';
 
 const SIGNATURE_START = '/* --- ANTIGRAVITY ZH-HANT-TW LOCALIZATION START --- */';
@@ -142,6 +142,13 @@ function generateJs() {
         return s.replace(/\\s+/g, ' ').replace(/[\\u2018\\u2019]/g, "'").replace(/[\\u201C\\u201D]/g, '"').trim();
     }
 
+    const greetingRules = [
+        [/^Hi (.+), what can we get done today\\?$/, name => '嗨，' + name + '，今天想完成什麼？'],
+        [/^Hey (.+), what should we build today\\?$/, name => '嗨，' + name + '，今天想打造什麼？'],
+        [/^Welcome back, (.+)\\. Where should we pick up\\?$/, name => '歡迎回來，' + name + '。要從哪裡繼續？'],
+        [/^Good to see you, (.+)\\. What's next\\?$/, name => '很高興見到你，' + name + '。接下來要做什麼？']
+    ];
+
     function isInBlockedZone(node) {
         let curr = node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
         let depth = 0;
@@ -169,9 +176,9 @@ function generateJs() {
         if (!originalVal || typeof originalVal !== 'string') return originalVal;
         const valNorm = norm(originalVal);
         if (!valNorm) return originalVal;
-        const greetingMatch = originalVal.match(/^Hi (.+), what can we get done today\\?$/);
-        if (greetingMatch && greetingMatch[0] === originalVal) {
-            return '嗨，' + greetingMatch[1] + '，今天想完成什麼？';
+        for (const [pattern, translate] of greetingRules) {
+            const match = valNorm.match(pattern);
+            if (match) return translate(match[1]);
         }
         
         const valLower = valNorm.toLowerCase();
@@ -335,9 +342,17 @@ function generateJs() {
         {
             key: 'when working in these conversations.',
             pattern: /when\\s*working\\s*in\\s*these\\s*conversations\\s*\\./i
+        },
+        {
+            key: 'This project is managed by the Swarm automation and can only be deleted by deleting that automation.',
+            pattern: /This\\s*(?:project|專案)\\s*is\\s*managed\\s*by\\s*the\\s*Swarm\\s*automation\\s*and\\s*can\\s*only\\s*be\\s*deleted\\s*by\\s*deleting\\s*that\\s*automation\\s*\\./i
+        },
+        {
+            key: 'Modified in',
+            pattern: /\\bModified\\s+in\\b/i
         }
     ];
-    const splitPhraseFragmentPattern = /\\b(?:when|working|in|this|project|these|conversations)\\b/i;
+    const splitPhraseFragmentPattern = /\\b(?:when|working|in|this|project|these|conversations|Swarm|automation|Modified)\\b|專案/i;
     const splitPhraseInteractiveSelector = 'a, button, input, textarea, select, option, [role="link"], [role="button"], [contenteditable="true"]';
     const splitPhraseMaxParentTextLength = 400;
     const splitPhraseMaxParentDepth = 4;
@@ -400,6 +415,65 @@ function generateJs() {
                 setTimeout(() => done.delete(entry.node), 1000);
             }
 
+            return true;
+        }
+
+        return false;
+    }
+
+    function translateAutomationProjectNotice(node) {
+        if (!node || node.nodeType !== Node.TEXT_NODE || isInBlockedZone(node)) return false;
+
+        const template = map.get('This project was created for the {automation} automation.');
+        if (!template || !template.includes('{automation}')) return false;
+        const [prefixTranslation, suffixTranslation] = template.split('{automation}');
+        const pattern = /(This\\s+(?:project|專案)\\s+was\\s+created\\s+for\\s+the\\s+)(.+?)(\\s+automation\\.)/i;
+
+        let parent = node.parentElement;
+        for (let depth = 0; parent && depth < splitPhraseMaxParentDepth; depth++) {
+            if (isInBlockedZone(parent)) return false;
+            const parentText = parent.textContent || '';
+            if (parentText.length > splitPhraseMaxParentTextLength) break;
+            const match = parentText.match(pattern);
+            if (!match || match.index === undefined) {
+                parent = parent.parentElement;
+                continue;
+            }
+
+            const textNodes = [];
+            let offset = 0;
+            const walker = document.createTreeWalker(parent, NodeFilter.SHOW_TEXT);
+            while (walker.nextNode()) {
+                const current = walker.currentNode;
+                const value = current.nodeValue || '';
+                textNodes.push({ node: current, start: offset, end: offset + value.length });
+                offset += value.length;
+            }
+
+            const prefixStart = match.index;
+            const prefixEnd = prefixStart + match[1].length;
+            const suffixStart = prefixEnd + match[2].length;
+            const suffixEnd = suffixStart + match[3].length;
+            const prefixNodes = textNodes.filter(entry => entry.start < prefixEnd && entry.end > prefixStart);
+            const suffixNodes = textNodes.filter(entry => entry.start < suffixEnd && entry.end > suffixStart);
+            if (!prefixNodes.length || !suffixNodes.length) return false;
+            if ([...prefixNodes, ...suffixNodes].some(entry => entry.node.parentElement?.closest(splitPhraseInteractiveSelector))) return false;
+
+            const replaceSpan = (entries, start, end, replacement) => {
+                let written = false;
+                for (const entry of entries) {
+                    const value = entry.node.nodeValue || '';
+                    const localStart = Math.max(start, entry.start) - entry.start;
+                    const localEnd = Math.min(end, entry.end) - entry.start;
+                    entry.node.nodeValue = value.slice(0, localStart) + (written ? '' : replacement) + value.slice(localEnd);
+                    written = true;
+                    done.add(entry.node);
+                    setTimeout(() => done.delete(entry.node), 1000);
+                }
+            };
+
+            replaceSpan(suffixNodes, suffixStart, suffixEnd, suffixTranslation);
+            replaceSpan(prefixNodes, prefixStart, prefixEnd, prefixTranslation);
             return true;
         }
 
@@ -530,12 +604,15 @@ function generateJs() {
                 if (!originalVal || originalVal.trim().length < 1) return;
                 if (isInBlockedZone(node)) return;
                 if (translateSplitTextElement(node.parentElement)) return;
+                const hasSplitPhraseFragment = splitPhraseFragmentPattern.test(originalVal);
+                if (hasSplitPhraseFragment && translateAutomationProjectNotice(node)) return;
+                if (hasSplitPhraseFragment && translateSplitPhraseTextNode(node)) return;
 
                 let newVal = isApprovalNoTextNode(node)
                     ? originalVal.replace(/No(?=\\s*$)/, '否')
                     : translateString(originalVal);
 
-                if (newVal === originalVal && translateSplitPhraseTextNode(node)) return;
+                if (newVal === originalVal && !hasSplitPhraseFragment && translateSplitPhraseTextNode(node)) return;
 
                 if (newVal !== originalVal) {
                     node.nodeValue = newVal;

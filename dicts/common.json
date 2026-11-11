@@ -231,6 +231,7 @@
     "View Usage": "查看用量",
     "Usage": "用量",
     "Free users and Google AI Plus users receive the minimum base limits on Antigravity. You can upgrade to Google AI Pro or above to receive higher rate limits.": "免費使用者與 Google AI Plus 使用者在 Antigravity 中享有最低的基本用量限制。您可以升級至 Google AI Pro 或更高階方案，以取得更高的速率限制。",
+    "You can upgrade to a Google AI Ultra plan to receive higher rate limits.": "您可以升級至 Google AI Ultra 方案，以取得更高的速率限制。",
     "View plans": "查看方案",
     "Auto (Preview)": "自動（預覽版）",
     "Automatically decide if commands run.": "自動判斷是否執行指令。",
@@ -270,5 +271,8 @@
     "Agents created by this automation run in a dedicated project with its own permissions. You can change the permissions in the project settings page.": "此自動化建立的 Agent 會在具有獨立權限的專用專案中執行。您可以在專案設定頁面中變更這些權限。",
     "Submit (↵)": "提交 (↵)",
     "Skip (Esc), Skip All (⌘Esc)": "略過 (Esc), 全部略過 (⌘Esc)",
-    "Skip (Esc), Skip All (Ctrl+Esc)": "略過 (Esc), 全部略過 (Ctrl+Esc)"
+    "Skip (Esc), Skip All (Ctrl+Esc)": "略過 (Esc), 全部略過 (Ctrl+Esc)",
+    "Start Voice mode": "啟動語音模式",
+    "Featured": "精選",
+    "Details": "詳細資訊"
 }
