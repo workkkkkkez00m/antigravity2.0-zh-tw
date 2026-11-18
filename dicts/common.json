@@ -300,5 +300,11 @@
     "Copy Path": "複製路徑",
     "Remove": "移除",
     "Unauthenticated": "尚未驗證身分",
-    "Context Providers": "內容來源"
+    "Context Providers": "內容來源",
+    "Good Response": "回覆良好",
+    "Bad Response": "回覆不佳",
+    "UI Extensions": "UI 擴充功能",
+    "Last": "最近",
+    "Sign in required": "需要登入",
+    "Google does not control the availability or functionality of third party developer tools. Your data from third party developer tools connected to your Antigravity instance may be shared with Google. Google will protect any such data in accordance with the Google Privacy Policy, found here:": "Google 無法控制第三方開發者工具的可用性或功能。來自連接至您 Antigravity 執行個體的第三方開發者工具的資料可能會與 Google 分享。Google 將依照 Google 隱私權政策保護此類資料，詳見： "
 }

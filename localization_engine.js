@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
+const crypto = require('crypto');
 
 const PROJECT_ID = 'antigravity2-zh-hant-tw';
 const PROJECT_NAME = 'Antigravity 2.0 繁體中文套件';
-const ENGINE_VERSION = '2.0.7';
+const ENGINE_VERSION = '2.0.8';
 const SIGNATURE = 'ZH-HANT-TW';
 
 const SIGNATURE_START = '/* --- ANTIGRAVITY ZH-HANT-TW LOCALIZATION START --- */';
@@ -149,6 +150,28 @@ function generateJs() {
         [/^Good to see you, (.+)\\. What's next\\?$/, name => '很高興見到你，' + name + '。接下來要做什麼？']
     ];
 
+    function formatLimitDuration(value, abbreviated) {
+        const match = abbreviated
+            ? value.match(/^(\\d+)\\s*([dhm])(?:\\s+(\\d+)\\s*([dhm]))?(?:\\s+(\\d+)\\s*([dhm]))?$/i)
+            : value.match(/^(\\d+)\\s+(days?|hours?|minutes?)(?:,\\s*(\\d+)\\s+(days?|hours?|minutes?))?(?:,\\s*(\\d+)\\s+(days?|hours?|minutes?))?$/i);
+        if (!match) return null;
+
+        const units = abbreviated
+            ? { d: ['天', 0], h: ['小時', 1], m: ['分鐘', 2] }
+            : { day: ['天', 0], hour: ['小時', 1], minute: ['分鐘', 2] };
+        const parts = [];
+        let previousOrder = -1;
+        for (let i = 1; i < match.length; i += 2) {
+            if (!match[i]) continue;
+            const unit = match[i + 1].toLowerCase().replace(/s$/, '');
+            const [label, order] = units[unit];
+            if (order <= previousOrder) return null;
+            parts.push(match[i] + ' ' + label);
+            previousOrder = order;
+        }
+        return parts.join(' ');
+    }
+
     function isInBlockedZone(node) {
         let curr = node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
         let depth = 0;
@@ -176,6 +199,23 @@ function generateJs() {
         if (!originalVal || typeof originalVal !== 'string') return originalVal;
         const valNorm = norm(originalVal);
         if (!valNorm) return originalVal;
+        const weeklyCountdown = valNorm.match(/^Weekly limit,\\s*resets in (.+)$/i);
+        if (weeklyCountdown) {
+            const duration = formatLimitDuration(weeklyCountdown[1], true);
+            return duration ? '每週限制，' + duration + '後重置' : originalVal;
+        }
+        const resetCountdown = valNorm.match(/^Resets in (.+)$/i);
+        if (resetCountdown) {
+            const duration = formatLimitDuration(resetCountdown[1], true);
+            return duration ? duration + '後重置' : originalVal;
+        }
+        const refreshCountdown = valNorm.match(/^You have used some of your (weekly|5-hour) limit, it will fully refresh in (.+)\\.$/i);
+        if (refreshCountdown) {
+            const duration = formatLimitDuration(refreshCountdown[2], false);
+            if (!duration) return originalVal;
+            const limit = refreshCountdown[1].toLowerCase() === 'weekly' ? '每週' : '五小時';
+            return '您已使用部分' + limit + '額度，將於 ' + duration + '後完全恢復。';
+        }
         for (const [pattern, translate] of greetingRules) {
             const match = valNorm.match(pattern);
             if (match) return translate(match[1]);
@@ -424,21 +464,39 @@ function generateJs() {
     function translateAutomationProjectNotice(node) {
         if (!node || node.nodeType !== Node.TEXT_NODE || isInBlockedZone(node)) return false;
 
-        const template = map.get('This project was created for the {automation} automation.');
-        if (!template || !template.includes('{automation}')) return false;
-        const [prefixTranslation, suffixTranslation] = template.split('{automation}');
-        const pattern = /(This\\s+(?:project|專案)\\s+was\\s+created\\s+for\\s+the\\s+)(.+?)(\\s+automation\\.)/i;
+        const notices = [
+            {
+                key: 'This project was created for the {automation} automation.',
+                pattern: /(This\\s+(?:project|專案)\\s+was\\s+created\\s+for\\s+the\\s+)(.+?)(\\s+automation\\.)/i
+            },
+            {
+                key: 'This project is managed by the {automation} automation and can only be deleted by deleting that automation.',
+                pattern: /(This\\s+(?:project|專案)\\s+is\\s+managed\\s+by\\s+the\\s+)(.+?)(\\s+automation\\s+and\\s+can\\s+only\\s+be\\s+deleted\\s+by\\s+deleting\\s+that\\s+automation\\.)/i
+            }
+        ];
 
         let parent = node.parentElement;
         for (let depth = 0; parent && depth < splitPhraseMaxParentDepth; depth++) {
             if (isInBlockedZone(parent)) return false;
             const parentText = parent.textContent || '';
             if (parentText.length > splitPhraseMaxParentTextLength) break;
-            const match = parentText.match(pattern);
+            let match;
+            let template;
+            for (const notice of notices) {
+                const translation = map.get(notice.key);
+                if (!translation || !translation.includes('{automation}')) continue;
+                const candidate = parentText.match(notice.pattern);
+                if (candidate) {
+                    match = candidate;
+                    template = translation;
+                    break;
+                }
+            }
             if (!match || match.index === undefined) {
                 parent = parent.parentElement;
                 continue;
             }
+            const [prefixTranslation, suffixTranslation] = template.split('{automation}');
 
             const textNodes = [];
             let offset = 0;
@@ -817,6 +875,53 @@ function closeAntigravityProcesses() {
     while (Date.now() - start < 1500) {}
 }
 
+function stopMacAntigravityProcesses(installDir) {
+    let appDir = path.resolve(installDir);
+    while (!appDir.endsWith('.app') && path.dirname(appDir) !== appDir) appDir = path.dirname(appDir);
+    if (!appDir.endsWith('.app')) {
+        console.error(`[錯誤] 無法識別 Antigravity.app：${installDir}`);
+        return false;
+    }
+
+    try {
+        const appPaths = [appDir, fs.realpathSync(appDir)];
+        const list = () => child_process.execFileSync('/bin/ps', ['-ww', '-axo', 'pid=,command='], { encoding: 'utf-8' })
+            .split('\n').flatMap(line => {
+                const match = line.match(/^\s*(\d+)\s+(.+)$/);
+                if (!match || !appPaths.some(appPath => match[2].startsWith(`${appPath}/Contents/`))) return [];
+                return [{ pid: Number(match[1]), command: match[2] }];
+            });
+
+        const stop = signal => {
+            for (const item of list()) {
+                if (!list().some(current => current.pid === item.pid && current.command === item.command)) continue;
+                try { process.kill(item.pid, signal); }
+                catch (error) { if (error.code !== 'ESRCH') throw error; }
+            }
+        };
+        const wait = seconds => child_process.execFileSync('/bin/sleep', [String(seconds)]);
+        // 維持 main 的兩輪關閉、等待與殘留 PID 處理，只匹配目標 app 的執行路徑。
+        stop('SIGTERM');
+        wait(2);
+        stop('SIGTERM');
+        wait(1.5);
+        if (list().length === 0) return true;
+        const remaining = list();
+        for (const item of remaining) {
+            if (!list().some(current => current.pid === item.pid && current.command === item.command)) continue;
+            try { process.kill(item.pid, 'SIGKILL'); }
+            catch (error) { if (error.code !== 'ESRCH') throw error; }
+        }
+        wait(0.5);
+        const survivors = list();
+        if (survivors.length === 0) return true;
+        console.error(`[錯誤] Antigravity 未完整退出（PID：${survivors.map(item => item.pid).join(', ')}）；未修改 app.asar。`);
+    } catch (error) {
+        console.error(`[錯誤] 無法確認 Antigravity 是否完整退出：${error.message}；未修改 app.asar。`);
+    }
+    return false;
+}
+
 function detectInstallationDir(manualDir) {
     if (manualDir) {
         if (fs.existsSync(manualDir)) {
@@ -954,9 +1059,103 @@ function createTrayCreatePatch() {
     /* --- TRAY TRANSLATION END --- */`;
 }
 
+function verifyMacAsar(filePath, localized) {
+    const asar = require('@electron/asar');
+    const stat = fs.statSync(filePath);
+    if (!stat.isFile() || stat.size === 0) throw new Error(`ASAR 檔案為空或不是檔案：${filePath}`);
+    asar.uncache(filePath);
+    const raw = asar.getRawHeader(filePath);
+    const dataSize = stat.size - 8 - raw.headerSize;
+    if (dataSize < 0) throw new Error(`ASAR 標頭不完整：${filePath}`);
+    const verifyEntries = entries => {
+        for (const entry of Object.values(entries)) {
+            if (entry.files) verifyEntries(entry.files);
+            else if (!entry.unpacked && !entry.link && entry.size > 0) {
+                const offset = Number(entry.offset);
+                if (!Number.isSafeInteger(offset) || offset < 0 || !Number.isSafeInteger(entry.size)
+                    || offset + entry.size > dataSize) throw new Error(`ASAR 內容不完整：${filePath}`);
+            }
+        }
+    };
+    verifyEntries(raw.header.files);
+    asar.listPackage(filePath);
+    const preload = asar.extractFile(filePath, 'dist/preload.js').toString('utf-8');
+    if (!preload) throw new Error(`ASAR 中的 preload.js 為空：${filePath}`);
+    const hasTranslation = preload.includes(SIGNATURE_START) && preload.includes(SIGNATURE_END);
+    if (localized !== null && hasTranslation !== localized) throw new Error(`ASAR 翻譯狀態不符：${filePath}`);
+}
+
+function fileDigest(filePath) {
+    const hash = crypto.createHash('sha256');
+    const fd = fs.openSync(filePath, 'r');
+    const buffer = Buffer.alloc(1024 * 1024);
+    try {
+        let count;
+        while ((count = fs.readSync(fd, buffer, 0, buffer.length, null)) > 0) hash.update(buffer.subarray(0, count));
+    } finally {
+        fs.closeSync(fd);
+    }
+    return hash.digest('hex');
+}
+
+function verifySameFile(source, copy) {
+    if (fs.statSync(source).size !== fs.statSync(copy).size || fileDigest(source) !== fileDigest(copy)) {
+        throw new Error(`檔案複製後內容不一致：${copy}`);
+    }
+}
+
+function ensureMacBackup(asarPath, bakPath, stagePath) {
+    if (fs.existsSync(bakPath)) {
+        verifyMacAsar(bakPath, false);
+        return;
+    }
+    verifyMacAsar(asarPath, false);
+    fs.copyFileSync(asarPath, stagePath, fs.constants.COPYFILE_EXCL);
+    verifyMacAsar(stagePath, false);
+    verifySameFile(asarPath, stagePath);
+    fs.linkSync(stagePath, bakPath);
+    try { verifyMacAsar(bakPath, false); }
+    catch (error) { fs.unlinkSync(bakPath); throw error; }
+}
+
+function replaceMacAsar(asarPath, bakPath, candidatePath, rollbackPath, verifyInstalled) {
+    const hadOriginal = fs.existsSync(asarPath);
+    const originalDigest = hadOriginal ? fileDigest(asarPath) : null;
+    if (hadOriginal) {
+        fs.copyFileSync(asarPath, rollbackPath, fs.constants.COPYFILE_EXCL);
+        verifySameFile(asarPath, rollbackPath);
+    }
+    try {
+        fs.renameSync(candidatePath, asarPath);
+        verifyInstalled(asarPath);
+        if (hadOriginal) fs.unlinkSync(rollbackPath);
+        return { success: true, recovered: true };
+    } catch (error) {
+        console.error(`[錯誤] ASAR 替換或驗證失敗：${error.message}`);
+        try {
+            if (hadOriginal) {
+                if (!fs.existsSync(asarPath) || fileDigest(asarPath) !== originalDigest) {
+                    fs.renameSync(rollbackPath, asarPath);
+                }
+                if (fileDigest(asarPath) !== originalDigest) throw new Error('回復後摘要不符');
+            } else {
+                if (fs.existsSync(asarPath)) fs.unlinkSync(asarPath);
+                if (fs.existsSync(asarPath)) throw new Error('無法回復原本不存在的 app.asar');
+            }
+            console.error('[回復] 已回復替換前的 app.asar。');
+        } catch (recoveryError) {
+            console.error(`[錯誤] 自動回復失敗：${recoveryError.message}`);
+            console.error(`[回復] 保留 ${bakPath}、${rollbackPath} 與 ${candidatePath} 供手動處理。`);
+            return { success: false, recovered: false };
+        }
+        return { success: false, recovered: true };
+    }
+}
+
 function install20(resourcesDir) {
     const asarPath = path.join(resourcesDir, 'app.asar');
     const bakPath = path.join(resourcesDir, 'app.asar.bak');
+    const mac = process.platform === 'darwin';
 
     if (!fs.existsSync(asarPath)) {
         console.error(`[錯誤] 在 resources 目錄中找不到 app.asar：${resourcesDir}`);
@@ -967,9 +1166,19 @@ function install20(resourcesDir) {
         return false;
     }
 
-    closeAntigravityProcesses();
+    if (mac ? !stopMacAntigravityProcesses(path.dirname(path.dirname(resourcesDir))) : (closeAntigravityProcesses(), false)) {
+        return false;
+    }
 
-    if (!fs.existsSync(bakPath)) {
+    let transactionDir;
+    let preserveTransaction = false;
+    try {
+    if (mac) {
+        transactionDir = fs.mkdtempSync(path.join(resourcesDir, '.app-asar-'));
+        ensureMacBackup(asarPath, bakPath, path.join(transactionDir, 'backup.asar'));
+    }
+
+    if (!mac && !fs.existsSync(bakPath)) {
         console.log('[備份] 正在建立官方 app.asar 備份...');
         let backupOk = false;
         try {
@@ -999,11 +1208,11 @@ function install20(resourcesDir) {
         if (backupOk) {
             console.log('[備份] 備份完成。');
         }
-    } else {
+    } else if (!mac) {
         console.log('[備份] 已存在 app.asar.bak，本次沿用既有備份。');
     }
 
-    const tempDir = path.join(__dirname, '_temp_asar');
+    const tempDir = mac ? path.join(transactionDir, 'unpacked') : path.join(__dirname, '_temp_asar');
     if (fs.existsSync(tempDir)) {
         fs.rmSync(tempDir, { recursive: true, force: true });
     }
@@ -1075,7 +1284,8 @@ function install20(resourcesDir) {
     }
 
     console.log('[打包] 正在重新打包 app.asar...');
-    const packRes = runAsarCommand('pack', [tempDir, asarPath]);
+    const candidatePath = mac ? path.join(transactionDir, 'candidate.asar') : asarPath;
+    const packRes = runAsarCommand('pack', [tempDir, candidatePath]);
     fs.rmSync(tempDir, { recursive: true, force: true });
 
     if (!packRes.success) {
@@ -1084,8 +1294,24 @@ function install20(resourcesDir) {
         return false;
     }
 
+    if (mac) {
+        verifyMacAsar(candidatePath, true);
+        const replacement = replaceMacAsar(asarPath, bakPath, candidatePath,
+            path.join(transactionDir, 'rollback.asar'), installedPath => verifyMacAsar(installedPath, true));
+        if (!replacement.success) {
+            preserveTransaction = !replacement.recovered;
+            return false;
+        }
+    }
+
     console.log(`[完成] ${PROJECT_NAME} 已套用完成。`);
     return true;
+    } catch (error) {
+        console.error(`[錯誤] 安裝 app.asar 失敗：${error.message}`);
+        return false;
+    } finally {
+        if (transactionDir && !preserveTransaction) fs.rmSync(transactionDir, { recursive: true, force: true });
+    }
 }
 
 function restore20(resourcesDir) {
@@ -1097,6 +1323,39 @@ function restore20(resourcesDir) {
         return false;
     }
 
+    if (process.platform === 'darwin') {
+        if (!checkEnvironment()) return false;
+        if (!stopMacAntigravityProcesses(path.dirname(path.dirname(resourcesDir)))) return false;
+        let transactionDir;
+        let preserveTransaction = false;
+        try {
+            verifyMacAsar(bakPath, false);
+            transactionDir = fs.mkdtempSync(path.join(resourcesDir, '.app-asar-'));
+            const candidatePath = path.join(transactionDir, 'candidate.asar');
+            fs.copyFileSync(bakPath, candidatePath, fs.constants.COPYFILE_EXCL);
+            verifyMacAsar(candidatePath, false);
+            verifySameFile(bakPath, candidatePath);
+            const replacement = replaceMacAsar(asarPath, bakPath, candidatePath,
+                path.join(transactionDir, 'rollback.asar'), installedPath => {
+                    verifyMacAsar(installedPath, false);
+                    verifySameFile(bakPath, installedPath);
+                });
+            if (!replacement.success) {
+                preserveTransaction = !replacement.recovered;
+                return false;
+            }
+            try { fs.unlinkSync(bakPath); }
+            catch (error) { console.warn(`[警告] 無法移除官方備份：${error.message}`); }
+            console.log('[完成] 官方 app.asar 已還原。');
+            return true;
+        } catch (error) {
+            console.error(`[錯誤] 還原 app.asar 失敗：${error.message}`);
+            return false;
+        } finally {
+            if (transactionDir && !preserveTransaction) fs.rmSync(transactionDir, { recursive: true, force: true });
+        }
+    }
+
     closeAntigravityProcesses();
 
     console.log('[還原] 正在還原官方 app.asar...');
@@ -1106,7 +1365,7 @@ function restore20(resourcesDir) {
     return true;
 }
 
-function locateResourcesDir(installDir) {
+function locateResourcesDir(installDir, restore = false) {
     const candidates = [
         path.join(installDir, 'resources'),
         path.join(installDir, 'Contents', 'Resources'),
@@ -1114,7 +1373,8 @@ function locateResourcesDir(installDir) {
     ];
 
     for (const candidate of candidates) {
-        if (fs.existsSync(path.join(candidate, 'app.asar'))) {
+        if (fs.existsSync(path.join(candidate, 'app.asar'))
+            || (process.platform === 'darwin' && restore && fs.existsSync(path.join(candidate, 'app.asar.bak')))) {
             return candidate;
         }
     }
@@ -1152,8 +1412,15 @@ function main() {
         }
     }
 
+    if (process.platform === 'darwin' && process.env.ANTIGRAVITY_INSTALLER_MODE === '1'
+        && process.env.ANTIGRAVITY_GUI_CONFIRMED !== '1') {
+        console.error('[錯誤] macOS 安裝工具必須先完成圖形確認。');
+        process.exitCode = 1;
+        return;
+    }
+
     const installDir = detectInstallationDir(manualDir);
-    const resourcesDir = locateResourcesDir(installDir);
+    const resourcesDir = locateResourcesDir(installDir, restore);
 
     if (!fs.existsSync(resourcesDir)) {
         console.error(`[錯誤] 無法定位有效的 resources 目錄：${resourcesDir}`);
