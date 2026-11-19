@@ -62,5 +62,11 @@
     "Custom Order": "自訂順序",
     "Last 7 days": "過去 7 天",
     "Auto Pin": "自動釘選",
-    "Archived Only": "僅顯示已封存"
+    "Archived Only": "僅顯示已封存",
+    "Maximize Pane": "最大化窗格",
+    "Reload": "重新載入",
+    "Downloads": "下載項目",
+    "Add screenshot to conversation": "將螢幕截圖加入對話",
+    "Open in external browser": "在外部瀏覽器中開啟",
+    "Your This Computer setting": "您的「這台電腦」設定"
 }
