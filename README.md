@@ -1,12 +1,12 @@
 # Antigravity 2.0 繁體中文套件
 
-> **請先選擇安裝方式。兩種方式都需要先安裝 [Node.js LTS](https://nodejs.org/)（包含 npm）。**
->
-> | 安裝方式 | 版本與平台 | 使用者需要做的事 |
-> |----------|------------|------------------|
-> | **傳統版** | v1.0.15，Windows／macOS | 下載 zip 或 Git Clone，**手動執行 `npm install`**，再執行安裝或還原腳本。 |
-> | **圖形化版** | v2.0.8，Windows／macOS | 下載對應安裝器，執行圖形化安裝或還原；**不需使用者手動執行 npm 指令**。 |
->
+**請先選擇安裝方式。兩種方式都需要先安裝 [Node.js LTS](https://nodejs.org/)（包含 npm）。**
+
+| 安裝方式 | 版本與平台 | 使用者需要做的事 |
+|----------|------------|------------------|
+| **傳統版** | v1.0.15，Windows／macOS | 下載 zip 或 Git Clone，**⚠️ 首次安裝及每次更新本套件後，先手動執行 `npm install`**，再執行安裝或還原腳本。 |
+| **圖形化版** | v2.0.8，Windows／macOS | 下載對應安裝器，執行圖形化安裝或還原；**⚠️ 不需使用者手動執行 npm 指令**。 |
+
 將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。翻譯字典以 Antigravity 2.0 v2.33.0 介面為基準。請依照下方對應的操作區塊安裝與還原。
 
 Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available project that translates the Antigravity 2.0 interface into Traditional Chinese. It works by unpacking and repacking the local Electron ASAR file, without modifying official core binaries or redistributing any official Antigravity files. The toolkit supports Windows and macOS, automatically creates backups, runs entirely on the user’s local machine, and avoids translating code editors, terminals, input fields, debug consoles, and other areas where localization could interfere with development workflows.
@@ -90,9 +90,9 @@ npm install
 
 ### 安裝
 
-#### 首次使用前
+### ⚠️ 首次安裝或更新本套件後：先執行 `npm install`
 
-第一次使用前，請切換到本套件資料夾，也就是可以看到 `package.json`、`localization_engine.js` 與 `dicts/` 的那一層目錄，再手動執行 `npm install`。此步驟會將 `@electron/asar` 安裝到本地 `node_modules/`，只需在首次使用時執行一次。
+**首次安裝或更新本套件版本後，請切換到目前使用的套件資料夾，也就是可以看到 `package.json`、`localization_engine.js` 與 `dicts/` 的那一層目錄，先手動執行 `npm install`，再執行安裝或還原腳本。每次更新本套件後都要重新執行此步驟，讓目前版本的 `@electron/asar` 安裝在本地 `node_modules/`。**
 
 下載 zip 的 Windows 範例：
 
@@ -269,7 +269,7 @@ Antigravity 官方更新時，會重新覆蓋 `app.asar` 檔案，導致先前�
 <details>
 <summary><strong>為什麼傳統版需要 npm install？</strong></summary>
 
-本套件使用 `@electron/asar` 進行 ASAR 展開與重新打包。傳統版的 `npm install` 會將此工具安裝到本地 `node_modules/` 目錄，使安裝腳本能夠正常運作。只需在首次使用時手動執行一次；圖形化版不需使用者手動執行 npm 指令。
+本套件使用 `@electron/asar` 進行 ASAR 展開與重新打包。傳統版的 `npm install` 會將此工具安裝到本地 `node_modules/` 目錄，使安裝腳本能夠正常運作。首次安裝及每次更新本套件版本後，都需在目前使用的套件資料夾手動執行一次；圖形化版不需使用者手動執行 npm 指令。
 </details>
 
 <details>
