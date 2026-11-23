@@ -4,10 +4,10 @@
 
 | 安裝方式 | 版本與平台 | 使用者需要做的事 |
 |----------|------------|------------------|
-| **傳統版** | v1.0.15，Windows／macOS | 下載 zip 或 Git Clone，**⚠️ 首次安裝及每次更新本套件後，先手動執行 `npm install`**，再執行安裝或還原腳本。 |
-| **圖形化版** | v2.0.8，Windows／macOS | 下載對應安裝器，執行圖形化安裝或還原；**⚠️ 不需使用者手動執行 npm 指令**。 |
+| **傳統版** | v1.0.16，Windows／macOS | 下載 zip 或 Git Clone，**⚠️ 首次安裝及每次更新本套件後，先手動執行 `npm install`**，再執行安裝或還原腳本。 |
+| **圖形化版** | v2.0.9，Windows／macOS | 下載對應安裝器，執行圖形化安裝或還原；**⚠️ 不需使用者手動執行 npm 指令**。 |
 
-將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。翻譯字典以 Antigravity 2.0 v2.33.0 介面為基準。請依照下方對應的操作區塊安裝與還原。
+將 Antigravity 2.0 的介面翻譯為繁體中文（台灣）。翻譯字典以 Antigravity 2.0 v2.34.0 介面為基準。請依照下方對應的操作區塊安裝與還原。
 
 Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available project that translates the Antigravity 2.0 interface into Traditional Chinese. It works by unpacking and repacking the local Electron ASAR file, without modifying official core binaries or redistributing any official Antigravity files. The toolkit supports Windows and macOS, automatically creates backups, runs entirely on the user’s local machine, and avoids translating code editors, terminals, input fields, debug consoles, and other areas where localization could interfere with development workflows.
 
@@ -15,7 +15,7 @@ Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available p
 
 **Antigravity 2.0 繁體中文套件**是一套公開且免費的介面本地化工具，透過 ASAR 展開與重新打包機制，將 Antigravity 2.0 的英文介面翻譯為繁體中文。
 
-本次翻譯字典以 Antigravity 2.0 v2.33.0 介面為基準，建議安裝本套件最新版。
+本次翻譯字典以 Antigravity 2.0 v2.34.0 介面為基準，建議安裝本套件最新版。
 
 - 不修改官方核心二進位檔案
 - 不散布官方 `app.asar` 或任何官方檔案
@@ -33,12 +33,11 @@ Antigravity 2.0 Traditional Chinese Localization Toolkit is a source-available p
 
 ## 版本更新重點
 
-- **v1.0.15 傳統版**：安裝前請先儲存工作；腳本提示時輸入 `1` 確認、`2` 取消。確認後才會強制退出 Antigravity 與背景程序並開始安裝。
-- **v2.0.8 圖形化版**：安裝前請先儲存工作；在安裝器中勾選同意強制退出 Antigravity。確認後才會強制退出 Antigravity 與背景程序並開始安裝。
-- 兩版字典基準更新至 Antigravity 2.0 v2.33.0。6 個字典檔共 1,180 筆翻譯詞彙，分別較 v1.0.14 與 v2.0.7 增加 33 筆。
-- 新增 Gemini 3.8 Flash 單模型群組，以及 Gemini 4 Neon、Gemini 4 Hydrogen、Orchestrator (Neon)、Gemini 3.8 Flash 模型群組的說明，並加入 Extra（超高）強度選項。
-- 新增關閉分頁、開啟命令選擇區與鍵盤快捷鍵、取消生成、切換專案與環境選擇器、在對話中尋找、為選取內容加入註解與提出側邊欄問題、水平與垂直分割對話，以及分割終端機、開新終端機分頁、將終端機內容加入聊天與全選等快捷鍵詞彙。
-- 新增每週與五小時額度重置倒數的動態翻譯，涵蓋簡寫時間與完整時間格式。
+- **v1.0.16 傳統版**：安裝前請先儲存工作；腳本提示時輸入 `1` 確認、`2` 取消。確認後才會強制退出 Antigravity 與背景程序並開始安裝。
+- **v2.0.9 圖形化版**：安裝前請先儲存工作；在安裝器中勾選同意強制退出 Antigravity。確認後才會強制退出 Antigravity 與背景程序並開始安裝。
+- 兩版字典基準更新至 Antigravity 2.0 v2.34.0。6 個字典檔共 1,193 筆翻譯詞彙，分別較 v1.0.15 與 v2.0.8 增加 13 筆。
+- 依據 Antigravity 2.0 v2.34.0 新增翻譯詞彙。
+- 優化翻譯引擎：略過對話本文、合併動態文字節點的翻譯處理並減少重複掃描；補強 `Cancel (...)`、`Response actions` 與 `Table options` 的翻譯。
 
 ## 使用畫面
 
@@ -77,13 +76,13 @@ npm -v
 
 兩個指令都有出現版本號，即可繼續。
 
-## 方法一：傳統版（v1.0.15，Windows／macOS）
+## 方法一：傳統版（v1.0.16，Windows／macOS）
 
 ### 下載
 
 #### 方式一：GitHub Releases（推薦）
 
-前往本專案的 [GitHub Releases](../../releases) 頁面，在 Assets 區下載 `antigravity2-zh-hant-v1.0.15.zip`，再解壓縮到任意目錄。
+前往本專案的 [GitHub Releases](../../releases) 頁面，在 Assets 區下載 `antigravity2-zh-hant-v1.0.16.zip`，再解壓縮到任意目錄。
 
 > ⚠️ 請下載完整的 `.zip` 檔案，不要只下載單一的 `.bat` 或 `.command` 檔案。安裝腳本需要搭配 `localization_engine.js`、`dicts/` 字典目錄與 `package.json` 等檔案才能正常運作。Releases zip 不包含 `node_modules/`，解壓縮後仍需執行 `npm install`。
 
@@ -106,14 +105,14 @@ npm install
 下載 zip 的 Windows 範例：
 
 ```cmd
-cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.15"
+cd "C:\Users\你的使用者名稱\Downloads\antigravity2-zh-hant-v1.0.16"
 npm install
 ```
 
 下載 zip 的 macOS 範例：
 
 ```bash
-cd ~/Downloads/antigravity2-zh-hant-v1.0.15
+cd ~/Downloads/antigravity2-zh-hant-v1.0.16
 npm install
 ```
 
@@ -173,7 +172,7 @@ node localization_engine.js --restore
 
 > 還原時，引擎會使用首次安裝時建立的 `app.asar.bak` 回復官方原版。還原完成後，備份檔會被移除。
 
-## 方法二：圖形化版（v2.0.8，Windows／macOS）
+## 方法二：圖形化版（v2.0.9，Windows／macOS）
 
 ### 下載
 
@@ -181,8 +180,8 @@ node localization_engine.js --restore
 
 | 平台 | 安裝檔 | 還原檔 |
 |------|--------|--------|
-| Windows | `Antigravity-ZH-Hant-TW-v2.0.8-Windows-Install.exe` | `Antigravity-ZH-Hant-TW-v2.0.8-Windows-Restore.exe` |
-| macOS | `Antigravity-ZH-Hant-TW-v2.0.8-macOS-Install.pkg` | `Antigravity-ZH-Hant-TW-v2.0.8-macOS-Restore.pkg` |
+| Windows | `Antigravity-ZH-Hant-TW-v2.0.9-Windows-Install.exe` | `Antigravity-ZH-Hant-TW-v2.0.9-Windows-Restore.exe` |
+| macOS | `Antigravity-ZH-Hant-TW-v2.0.9-macOS-Install.pkg` | `Antigravity-ZH-Hant-TW-v2.0.9-macOS-Restore.pkg` |
 
 > ⚠️ **Windows SmartScreen 提醒**：目前 Windows 安裝檔尚未加入 Authenticode 程式碼簽章，因此 Windows 可能顯示 SmartScreen 警告。請只從本專案的 GitHub Releases 下載安裝檔，不要使用來路不明的轉載檔案。
 
@@ -190,11 +189,11 @@ node localization_engine.js --restore
 
 請先安裝 Antigravity 2.0 與 Node.js LTS，確認 Node.js 內建的 npm 可正常使用，並儲存目前工作。圖形化版會處理所需套件；使用者**不需手動執行 `npm install`**。安裝器不內建 Node.js，也不會自動替使用者安裝 Node.js；所需套件仍會從官方來源下載，因此安裝時需要網路連線。
 
-下列為既有工具畫面；v2.0.8 的驗證狀態請見下方「支援狀態」。
+下列為既有工具畫面；v2.0.9 的驗證狀態請見下方「支援狀態」。
 
 #### Windows
 
-執行 `Antigravity-ZH-Hant-TW-v2.0.8-Windows-Install.exe`。在安裝前確認畫面勾選同意強制退出 Antigravity 後按 **Next**。確認後才會強制退出 Antigravity 與背景程序並開始安裝。
+執行 `Antigravity-ZH-Hant-TW-v2.0.9-Windows-Install.exe`。在安裝前確認畫面勾選同意強制退出 Antigravity 後按 **Next**。確認後才會強制退出 Antigravity 與背景程序並開始安裝。
 
 | 安裝工具 | 還原工具 |
 |----------|----------|
@@ -206,7 +205,7 @@ node localization_engine.js --restore
 
 #### macOS
 
-執行 `Antigravity-ZH-Hant-TW-v2.0.8-macOS-Install.pkg`。在安裝前確認畫面勾選同意強制退出 Antigravity 後按 **開始安裝**。確認後才會強制退出 Antigravity 與背景程序並開始安裝。
+執行 `Antigravity-ZH-Hant-TW-v2.0.9-macOS-Install.pkg`。在安裝前確認畫面勾選同意強制退出 Antigravity 後按 **開始安裝**。確認後才會強制退出 Antigravity 與背景程序並開始安裝。
 
 | 安裝工具 | 還原工具 |
 |----------|----------|
@@ -222,8 +221,8 @@ node localization_engine.js --restore
 
 如需恢復官方英文原版，請完全退出 Antigravity，然後執行對應的還原檔：
 
-- **Windows**：`Antigravity-ZH-Hant-TW-v2.0.8-Windows-Restore.exe`
-- **macOS**：`Antigravity-ZH-Hant-TW-v2.0.8-macOS-Restore.pkg`
+- **Windows**：`Antigravity-ZH-Hant-TW-v2.0.9-Windows-Restore.exe`
+- **macOS**：`Antigravity-ZH-Hant-TW-v2.0.9-macOS-Restore.pkg`
 
 還原會使用安裝時建立的備份，將 Antigravity 回復為官方原版。
 
@@ -237,10 +236,10 @@ Antigravity 官方更新時，會重新覆蓋 `app.asar` 檔案，導致先前�
 
 | 方式 | 平台 | 安裝 | 還原 | UI 驗證 |
 |------|------|------|------|---------|
-| v1.0.15 傳統版 | macOS | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 |
-| v1.0.15 傳統版 | Windows | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 |
-| v2.0.8 圖形化版 | macOS | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 |
-| v2.0.8 圖形化版 | Windows | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 |
+| v1.0.16 傳統版 | macOS | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 |
+| v1.0.16 傳統版 | Windows | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 |
+| v2.0.9 圖形化版 | macOS | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 |
+| v2.0.9 圖形化版 | Windows | ✅ 已通過 | ✅ 已通過 | ✅ 已通過 |
 
 > 翻譯範圍持續補齊中。若在使用過程中發現未翻譯的文字，歡迎回報。
 
@@ -259,7 +258,7 @@ Antigravity 官方更新時，會重新覆蓋 `app.asar` 檔案，導致先前�
 | 啟動畫面文字 | 載入動畫文字 |
 | 鍵盤快捷鍵頁 | 快捷鍵描述與分類 |
 
-> 目前 6 個字典檔共 1,180 筆翻譯詞彙（依各字典檔 key 數合計）。
+> 目前 6 個字典檔共 1,193 筆翻譯詞彙（依各字典檔 key 數合計）。
 
 ### 不翻譯區域
 

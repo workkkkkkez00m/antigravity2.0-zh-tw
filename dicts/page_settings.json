@@ -598,5 +598,15 @@
     "Split Terminal": "分割終端機",
     "New Terminal Tab": "新增終端機分頁",
     "Terminal: Add to Chat": "終端機：加入聊天",
-    "Terminal: Select All": "終端機：全選"
+    "Terminal: Select All": "終端機：全選",
+    "Choose which key sends a message in the chat composer.": "選擇在聊天輸入框中用來傳送訊息的按鍵。",
+    "Press Enter to send, Shift+Enter for a new line.": "按 Enter 傳送，按 Shift+Enter 換行。",
+    "Press Cmd+Enter to send, Enter for a new line.": "按 Cmd+Enter 傳送，按 Enter 換行。",
+    "Press Ctrl+Enter to send, Enter for a new line.": "按 Ctrl+Enter 傳送，按 Enter 換行。",
+    "Orchestrator Settings": "協調器設定",
+    "Choose the models Orchestrator uses. A larger, smarter orchestrator model with a faster, cheaper executor gives high quality for fewer tokens.": "選擇協調器使用的模型。搭配功能更強、更聰明的協調器模型與速度更快、成本更低的執行模型，可使用較少的 Token 獲得高品質結果。",
+    "Orchestrator Model": "協調器模型",
+    "Plans the work, makes design decisions, and reviews the result. Pick a top-tier model. You can also pick one per conversation from the Orchestrator row in the model menu.": "負責規劃工作、做出設計決策並審查結果。建議選擇頂級模型。您也可以在模型選單的「協調器」列中，為每個對話個別選擇模型。",
+    "Executor Model": "執行模型",
+    "Carries out the plan: searches, edits, builds, and tests. Pick a faster, cheaper model.": "負責執行規劃，包括搜尋、編輯、建置與測試。建議選擇速度較快、成本較低的模型。"
 }
