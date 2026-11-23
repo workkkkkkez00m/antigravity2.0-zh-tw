@@ -6,7 +6,7 @@ const crypto = require('crypto');
 
 const PROJECT_ID = 'antigravity2-zh-hant-tw';
 const PROJECT_NAME = 'Antigravity 2.0 繁體中文套件';
-const ENGINE_VERSION = '1.0.15';
+const ENGINE_VERSION = '1.0.16';
 const SIGNATURE = 'ZH-HANT-TW';
 
 const SIGNATURE_START = '/* --- ANTIGRAVITY ZH-HANT-TW LOCALIZATION START --- */';
@@ -123,6 +123,10 @@ function generateJs() {
     const map = new Map(Object.entries(DICT_PLACEHOLDER));
     const lowerMap = new Map();
     for (const [k, v] of map.entries()) lowerMap.set(k.toLowerCase(), v);
+    const conversationControlLabels = {
+        'Response actions': '回應操作',
+        'Table options': '表格選項'
+    };
 
     const longEntries = REPLACEMENT_ENTRIES_PLACEHOLDER;
     const done = new WeakSet();
@@ -142,6 +146,11 @@ function generateJs() {
     function norm(s) {
         if (!s) return '';
         return s.replace(/\\s+/g, ' ').replace(/[\\u2018\\u2019]/g, "'").replace(/[\\u201C\\u201D]/g, '"').trim();
+    }
+
+    function translateCancelShortcut(value) {
+        const match = value.match(/^(\\s*)Cancel(\\s*\\([^()]+\\))(\\s*)$/i);
+        return match ? match[1] + (map.get('Cancel') || '取消') + match[2] + match[3] : null;
     }
 
     const greetingRules = [
@@ -198,8 +207,11 @@ function generateJs() {
 
     function translateString(originalVal) {
         if (!originalVal || typeof originalVal !== 'string') return originalVal;
+        const cancelShortcutTranslation = translateCancelShortcut(originalVal);
+        if (cancelShortcutTranslation !== null) return cancelShortcutTranslation;
         const valNorm = norm(originalVal);
         if (!valNorm) return originalVal;
+        if (conversationControlLabels[valNorm]) return conversationControlLabels[valNorm];
         const weeklyCountdown = valNorm.match(/^Weekly limit,\\s*resets in (.+)$/i);
         if (weeklyCountdown) {
             const duration = formatLimitDuration(weeklyCountdown[1], true);
@@ -298,7 +310,12 @@ function generateJs() {
             const v = el.getAttribute(attr);
             if (!v) continue;
             const t = norm(v);
-            if (map.has(t)) {
+            const cancelShortcutTranslation = translateCancelShortcut(v);
+            if (cancelShortcutTranslation !== null) {
+                el.setAttribute(attr, cancelShortcutTranslation);
+            } else if (conversationControlLabels[t]) {
+                el.setAttribute(attr, conversationControlLabels[t]);
+            } else if (map.has(t)) {
                 el.setAttribute(attr, map.get(t));
             } else if (lowerMap.has(t.toLowerCase())) {
                 el.setAttribute(attr, lowerMap.get(t.toLowerCase()));
@@ -356,7 +373,7 @@ function generateJs() {
         while (walker.nextNode()) {
             const current = walker.currentNode;
             if (!current.nodeValue || !current.nodeValue.trim()) continue;
-            if (isInBlockedZone(current)) return false;
+            if (isInBlockedZone(current) || isConversationBodyNode(current)) return false;
             textNodes.push(current);
         }
 
@@ -403,7 +420,7 @@ function generateJs() {
 
         let parent = node.parentElement;
         for (let depth = 0; parent && depth < splitPhraseMaxParentDepth; depth++) {
-            if (isInBlockedZone(parent)) return false;
+            if (isInBlockedZone(parent) || isConversationBodyNode(parent)) return false;
 
             const parentText = parent.textContent || '';
             if (parentText.length > splitPhraseMaxParentTextLength) break;
@@ -418,6 +435,7 @@ function generateJs() {
             const walker = document.createTreeWalker(parent, NodeFilter.SHOW_TEXT);
             while (walker.nextNode()) {
                 const current = walker.currentNode;
+                if (isConversationBodyNode(current)) return false;
                 const value = current.nodeValue || '';
                 textNodes.push({ node: current, start: offset, end: offset + value.length });
                 offset += value.length;
@@ -478,7 +496,7 @@ function generateJs() {
 
         let parent = node.parentElement;
         for (let depth = 0; parent && depth < splitPhraseMaxParentDepth; depth++) {
-            if (isInBlockedZone(parent)) return false;
+            if (isInBlockedZone(parent) || isConversationBodyNode(parent)) return false;
             const parentText = parent.textContent || '';
             if (parentText.length > splitPhraseMaxParentTextLength) break;
             let match;
@@ -504,6 +522,7 @@ function generateJs() {
             const walker = document.createTreeWalker(parent, NodeFilter.SHOW_TEXT);
             while (walker.nextNode()) {
                 const current = walker.currentNode;
+                if (isConversationBodyNode(current)) return false;
                 const value = current.nodeValue || '';
                 textNodes.push({ node: current, start: offset, end: offset + value.length });
                 offset += value.length;
@@ -628,21 +647,24 @@ function generateJs() {
                 }
             }
 
-            requestAnimationFrame(() => {
-                sweepAttributes(document.body);
-                translateTooltipPortals();
-            });
-            setTimeout(() => { sweepAttributes(document.body); translateTooltipPortals(); }, 0);
-            setTimeout(() => { sweepAttributes(document.body); translateTooltipPortals(); }, 30);
-            setTimeout(() => { sweepAttributes(document.body); translateTooltipPortals(); }, 80);
-            setTimeout(() => { sweepAttributes(document.body); translateTooltipPortals(); }, 150);
-            setTimeout(() => { sweepAttributes(document.body); translateTooltipPortals(); }, 300);
         } catch (err) {}
+    }
+
+    function isConversationBodyNode(node) {
+        const el = node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
+        if (!el || el.nodeType !== Node.ELEMENT_NODE) return false;
+        if (el.closest('[data-base-ui-portal] [role="tooltip"]')) return false;
+        if (el.closest('button, [role="button"]')) return false;
+        return !!el.closest(
+            '[data-testid="agent-response"] [data-markdown-root], '
+            + '[data-testid="user-message-content"] div.whitespace-pre-wrap[data-quotable]'
+        );
     }
 
     function translateNode(node) {
         try {
             if (!node) return;
+            if (node.nodeType === Node.TEXT_NODE && isConversationBodyNode(node)) return;
             if (done.has(node)) {
                 if (node.nodeType !== Node.TEXT_NODE) return;
                 const currentValue = node.nodeValue || '';
@@ -652,7 +674,7 @@ function generateJs() {
 
             if (node.nodeType === Node.ELEMENT_NODE) {
                 translateAttributes(node);
-                if (translateSplitTextElement(node)) return;
+                if (!isConversationBodyNode(node) && translateSplitTextElement(node)) return;
                 if (node.shadowRoot) translateNode(node.shadowRoot);
                 for (const child of node.childNodes) translateNode(child);
                 return;
@@ -682,14 +704,42 @@ function generateJs() {
         } catch (e) {}
     }
 
-    let portalDebounce = null;
+    const pendingTextNodes = new Set();
+    let textFramePending = false;
+    function queueTextNode(node) {
+        pendingTextNodes.add(node);
+        if (textFramePending) return;
+        textFramePending = true;
+        requestAnimationFrame(() => {
+            const nodes = [...pendingTextNodes];
+            pendingTextNodes.clear();
+            textFramePending = false;
+            for (const textNode of nodes) translateNode(textNode);
+        });
+    }
+
+    function shouldTranslateTextImmediately(el) {
+        if (!el || el.nodeType !== Node.ELEMENT_NODE || !el.closest) return true;
+        try {
+            return !!el.closest('[data-base-ui-portal], ' + tooltipPortalSelectors.join(', '));
+        } catch (e) {
+            return true;
+        }
+    }
+
     const observer = new MutationObserver(mutations => {
-        let hasChildList = false;
         for (const m of mutations) {
             if (m.type === 'childList') {
-                hasChildList = true;
                 for (const n of m.addedNodes) {
-                    translateNode(n);
+                    if (n.nodeType === Node.TEXT_NODE) {
+                        if (shouldTranslateTextImmediately(m.target)) {
+                            translateNode(n);
+                        } else if (!isConversationBodyNode(n)) {
+                            queueTextNode(n);
+                        }
+                    } else {
+                        translateNode(n);
+                    }
                     if (n.nodeType === Node.ELEMENT_NODE) {
                         try {
                             if (n.matches && n.matches('.react-tooltip-content-wrapper, [class*="react-tooltip" i]')) {
@@ -704,16 +754,27 @@ function generateJs() {
                             }
 
                             if (n.matches && n.matches(tooltipPortalSelectors.join(', '))) {
-                                translateNode(n);
                                 sweepAttributes(n);
-                            } else if (n.querySelector && n.querySelector(tooltipPortalSelectors.join(', '))) {
-                                translateTooltipPortals();
+                            }
+                            if (n.querySelectorAll) {
+                                for (const tooltip of n.querySelectorAll(tooltipPortalSelectors.join(', '))) {
+                                    translateNode(tooltip);
+                                    sweepAttributes(tooltip);
+                                }
                             }
                         } catch(e) {}
                     }
                 }
             } else if (m.type === 'characterData') {
-                translateNode(m.target);
+                if (m.target.nodeType === Node.TEXT_NODE) {
+                    if (shouldTranslateTextImmediately(m.target.parentElement)) {
+                        translateNode(m.target);
+                    } else if (!isConversationBodyNode(m.target)) {
+                        queueTextNode(m.target);
+                    }
+                } else {
+                    translateNode(m.target);
+                }
             } else if (m.type === 'attributes') {
                 const el = m.target;
                 if (!el || el.nodeType !== Node.ELEMENT_NODE) continue;
@@ -734,18 +795,11 @@ function generateJs() {
                 }
             }
         }
-        if (hasChildList) {
-            if (!portalDebounce) {
-                portalDebounce = setTimeout(() => {
-                    translateTooltipPortals();
-                    portalDebounce = null;
-                }, 50);
-            }
-        }
     });
 
     const obsOpts = { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['title', 'aria-label', 'placeholder'] };
 
+    let initialTooltipScanDone = false;
     const startEngine = () => {
         const target = document.body || document.documentElement;
         if (!target) return;
@@ -754,6 +808,10 @@ function generateJs() {
             observer.observe(target, obsOpts);
             translateNode(target);
             sweepAttributes(target);
+            if (!initialTooltipScanDone) {
+                initialTooltipScanDone = true;
+                translateTooltipPortals();
+            }
         } catch (e) {}
     };
 
@@ -794,7 +852,6 @@ function generateJs() {
     setTimeout(startEngine, 6000);
 
     document.addEventListener('pointerover', translateAroundPointer, true);
-    document.addEventListener('mouseover', translateAroundPointer, true);
     document.addEventListener('focusin', translateAroundPointer, true);
 })();
 ${SIGNATURE_END}`;
