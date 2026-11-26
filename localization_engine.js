@@ -6,7 +6,7 @@ const crypto = require('crypto');
 
 const PROJECT_ID = 'antigravity2-zh-hant-tw';
 const PROJECT_NAME = 'Antigravity 2.0 繁體中文套件';
-const ENGINE_VERSION = '1.0.16';
+const ENGINE_VERSION = '1.0.17';
 const SIGNATURE = 'ZH-HANT-TW';
 
 const SIGNATURE_START = '/* --- ANTIGRAVITY ZH-HANT-TW LOCALIZATION START --- */';
@@ -160,6 +160,16 @@ function generateJs() {
         [/^Good to see you, (.+)\\. What's next\\?$/, name => '很高興見到你，' + name + '。接下來要做什麼？']
     ];
 
+    const sshConnectionStatusRules = [
+        [/^Checking (.+)…$/, '正在檢查 ', '…'],
+        [/^Downloading the Antigravity server on (.+)…$/, '正在下載 Antigravity 伺服器至 ', '…'],
+        [/^Installed the Antigravity server on (.+)[.]$/, '已在 ', ' 安裝 Antigravity 伺服器。'],
+        [/^Starting the Antigravity server on (.+)…$/, '正在啟動以下主機上的 Antigravity 伺服器：', '…'],
+        [/^Connecting to the running server on (.+)…$/, '正在連線至以下主機上執行中的伺服器：', '…'],
+        [/^Restarting the Antigravity server on (.+)…$/, '正在重新啟動以下主機上的 Antigravity 伺服器：', '…'],
+        [/^Connecting to (.+)…$/, '正在連線至 ', '…']
+    ];
+
     function formatLimitDuration(value, abbreviated) {
         const match = abbreviated
             ? value.match(/^(\\d+)\\s*([dhm])(?:\\s+(\\d+)\\s*([dhm]))?(?:\\s+(\\d+)\\s*([dhm]))?$/i)
@@ -212,6 +222,14 @@ function generateJs() {
         const valNorm = norm(originalVal);
         if (!valNorm) return originalVal;
         if (conversationControlLabels[valNorm]) return conversationControlLabels[valNorm];
+        const breakdownCountMatch = valNorm.match(/^Show ([0-9]+) breakdowns?$/);
+        if (breakdownCountMatch) {
+            return '顯示 ' + breakdownCountMatch[1] + ' 項明細';
+        }
+        for (const [pattern, prefix, suffix] of sshConnectionStatusRules) {
+            const match = valNorm.match(pattern);
+            if (match) return prefix + match[1] + suffix;
+        }
         const weeklyCountdown = valNorm.match(/^Weekly limit,\\s*resets in (.+)$/i);
         if (weeklyCountdown) {
             const duration = formatLimitDuration(weeklyCountdown[1], true);
